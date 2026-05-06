@@ -441,9 +441,9 @@
     box-shadow:0 0 22px rgba(255,255,255,.10);
   }
 
-  .engine{--accent:#f7ca18;}
-  .mint{--accent:#00a86b;}
-  .citadel{--accent:#5f0fc6;}
+  .directive{--accent:#38bdf8;}
+  .market{--accent:#22c55e;}
+  .desk{--accent:#f59e0b;}
   .agency{--accent:#1a0daa;}
 
   .game-card::before{
@@ -460,9 +460,9 @@
     box-shadow:0 0 24px color-mix(in srgb, var(--accent) 22%, transparent);
   }
 
-  .engine .game-thumb{background-image:url('tne_thumbnail.png');}
-  .mint .game-thumb{background-image:url('mag_thumbnail.png');}
-  .nexus .game-thumb{background-image:url('cn_thumbnail.png');}
+  .directive .game-thumb{background-image:url('tcd_thumbnail.png');}
+  .market .game-thumb{background-image:url('tms_thumbnail.png');}
+  .desk .game-thumb{background-image:url('tsd_thumbnail.png');}
   .agency .game-thumb{background-image:url('tap_thumbnail.png');}
   
   #emailModal{
@@ -638,22 +638,22 @@
       </header>
 
 <section class="game-grid" aria-label="Available review games">
-  <article class="game-card engine coming-soon" aria-disabled="true">
+  <article class="game-card directive coming-soon" aria-disabled="true">
     <div class="game-thumb" aria-hidden="true"></div>
     <div class="game-content">
-      <h2 class="game-title">The Cost Ledger</h2>
+      <h2 class="game-title">The Cost Directive</h2>
       <p class="game-tagline">Coming soon.</p>
       <div class="topic-list">
         <span class="topic-chip">Coming Soon</span>
       </div>
       <div class="game-meta">
-        <div class="status-line"><span>Status</span><span class="status-value" id="status-engine">Coming Soon</span></div>
+        <div class="status-line"><span>Status</span><span class="status-value" id="status-directive">Coming Soon</span></div>
         <button class="enter-btn disabled-btn" type="button" disabled>Coming Soon</button>
       </div>
     </div>
   </article>
 
-  <article class="game-card mint coming-soon" aria-disabled="true">
+  <article class="game-card market coming-soon" aria-disabled="true">
     <div class="game-thumb" aria-hidden="true"></div>
     <div class="game-content">
       <h2 class="game-title">The Market Signal</h2>
@@ -662,13 +662,13 @@
         <span class="topic-chip">Coming Soon</span>
       </div>
       <div class="game-meta">
-        <div class="status-line"><span>Status</span><span class="status-value" id="status-mint">Coming Soon</span></div>
+        <div class="status-line"><span>Status</span><span class="status-value" id="status-market">Coming Soon</span></div>
         <button class="enter-btn disabled-btn" type="button" disabled>Coming Soon</button>
       </div>
     </div>
   </article>
 
-  <article class="game-card nexus coming-soon" aria-disabled="true">
+  <article class="game-card desk coming-soon" aria-disabled="true">
     <div class="game-thumb" aria-hidden="true"></div>
     <div class="game-content">
       <h2 class="game-title">The Strategy Desk</h2>
@@ -677,7 +677,7 @@
         <span class="topic-chip">Coming Soon</span>
       </div>
       <div class="game-meta">
-        <div class="status-line"><span>Status</span><span class="status-value" id="status-nexus">Coming Soon</span></div>
+        <div class="status-line"><span>Status</span><span class="status-value" id="status-desk">Coming Soon</span></div>
         <button class="enter-btn disabled-btn" type="button" disabled>Coming Soon</button>
       </div>
     </div>
@@ -776,20 +776,20 @@
   }
 
   const games = {
-    engine: {
-      title: "The National Engine",
-      file: "https://wjbyrd.github.io/The-National-Engine/",
-      statusKey: "managerialHub_engine_complete"
+    directive: {
+      title: "The Cost Directive",
+      file: "https://wjbyrd.github.io/The-Cost-Directive/",
+      statusKey: "managerialHub_directive_complete"
     },
-    mint: {
-      title: "The Mint of Ash and Gold",
-      file: "https://wjbyrd.github.io/The-Mint-of-Ash-and-Gold/",
-      statusKey: "managerialHub_mint_complete"
+    market: {
+      title: "The Market Signal",
+      file: "https://wjbyrd.github.io/The-Market-Signal/",
+      statusKey: "managerialHub_market_complete"
     },
-    nexus: {
-     title: "The Command Nexus",
-     file: "https://wjbyrd.github.io/The-Command-Nexus/",
-     statusKey: "managerialHub_nexus_complete"
+    desk: {
+     title: "The Strategy Desk",
+     file: "https://wjbyrd.github.io/The-Strategy-Desk/",
+     statusKey: "managerialHub_desk_complete"
     },
     agency: {
       title: "The Agency Protocol",
