@@ -1051,6 +1051,135 @@ body{
 .recovery-message.success{color:#93c5fd;}
 .recovery-message.error{color:#fca5a5;}
 
+
+/* Operations Artifact Vault */
+.artifact-vault-grid{
+  display:grid;
+  grid-template-columns:repeat(4, minmax(0, 1fr));
+  gap:14px;
+  margin-top:14px;
+}
+
+.artifact-vault-slot{
+  position:relative;
+  min-height:210px;
+  padding:16px 14px 14px;
+  border-radius:16px;
+  border:1px solid rgba(107,200,255,.16);
+  background:
+    radial-gradient(circle at top, rgba(107,200,255,.08), transparent 54%),
+    linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.018)),
+    rgba(0,0,0,.34);
+  box-shadow:inset 0 0 24px rgba(255,255,255,.025), 0 0 18px rgba(0,0,0,.34);
+  text-align:center;
+  overflow:hidden;
+}
+
+.artifact-vault-slot::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg, rgba(107,200,255,.11), transparent 42%);
+  opacity:.0;
+  pointer-events:none;
+}
+
+.artifact-vault-slot.unlocked{
+  border-color:rgba(107,200,255,.40);
+  box-shadow:
+    0 0 26px rgba(107,200,255,.13),
+    inset 0 0 24px rgba(107,200,255,.045),
+    0 0 22px rgba(0,0,0,.44);
+}
+
+.artifact-vault-slot.unlocked::before{opacity:1;}
+.artifact-vault-slot.sealed{opacity:.62; filter:grayscale(.20) saturate(.72);}
+
+.artifact-emblem{
+  width:72px;
+  height:72px;
+  margin:0 auto 12px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid rgba(107,200,255,.22);
+  background:
+    radial-gradient(circle, rgba(107,200,255,.18), rgba(0,0,0,.68) 62%),
+    rgba(255,255,255,.04);
+  color:rgba(220,240,255,.78);
+  font-size:22px;
+  letter-spacing:.08em;
+  font-weight:700;
+  text-transform:uppercase;
+  box-shadow:inset 0 0 20px rgba(0,0,0,.62), 0 0 16px rgba(107,200,255,.08);
+}
+
+.artifact-vault-slot.unlocked .artifact-emblem{
+  color:#fff;
+  border-color:rgba(107,200,255,.48);
+  box-shadow:
+    0 0 16px rgba(107,200,255,.28),
+    0 0 32px rgba(107,200,255,.12),
+    inset 0 0 22px rgba(0,0,0,.58);
+}
+
+.artifact-name{
+  font-size:15px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,.92);
+  font-weight:700;
+  line-height:1.2;
+}
+
+.artifact-source{
+  margin-top:6px;
+  font-size:11px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:rgba(173,222,255,.48);
+}
+
+.artifact-description{
+  margin-top:10px;
+  font-size:13px;
+  line-height:1.35;
+  color:rgba(255,255,255,.58);
+}
+
+.artifact-state{
+  margin-top:12px;
+  display:inline-flex;
+  padding:6px 9px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.14);
+  color:rgba(255,255,255,.62);
+  font-size:10px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+}
+
+.artifact-vault-slot.unlocked .artifact-state{
+  border-color:rgba(107,200,255,.38);
+  color:rgba(220,240,255,.90);
+  background:rgba(107,200,255,.10);
+}
+
+.artifact-vault-note{
+  margin:0 0 10px;
+  color:rgba(255,255,255,.64);
+}
+
+@media(max-width:900px){
+  .artifact-vault-grid{grid-template-columns:repeat(2, minmax(0, 1fr));}
+}
+
+@media(max-width:560px){
+  .artifact-vault-grid{grid-template-columns:1fr;}
+  .artifact-vault-slot{min-height:auto;}
+}
+
 @media(max-width:680px){
   .operations-menu-button{right:14px; bottom:14px; padding:8px 10px; font-size:10px;}
   .briefing-folder-header{padding:14px;}
@@ -1235,6 +1364,7 @@ body{
 
     <div class="operations-menu-actions">
       <button class="operations-menu-action" onclick="showOperationsPanel('instructionsPanel')">How This Works</button>
+      <button class="operations-menu-action" onclick="showOperationsPanel('artifactVaultPanel')">Artifact Vault</button>
       <button class="operations-menu-action" onclick="showOperationsPanel('operationLogPanel')">Operation Log</button>
       <button class="operations-menu-action" onclick="showOperationsPanel('recoveryPanel')">Recover Progress</button>
       <button class="operations-menu-action" onclick="toggleMenuMusic()">Toggle Sound</button>
@@ -1250,6 +1380,11 @@ body{
         <li>Progress is saved locally, so you can close the browser and resume later.</li>
       </ul>
       <p>Use your school email on the game start screen so the run can be recorded.</p>
+    </div>
+
+    <div id="artifactVaultPanel" class="operations-panel">
+      <p class="artifact-vault-note">Artifacts are unlocked when their operation is cleared. Some operations contain multiple boss artifacts, because one file can have more than one lesson. Imagine that.</p>
+      <div id="operationsArtifactVault" class="artifact-vault-grid"></div>
     </div>
 
     <div id="operationLogPanel" class="operations-panel">
@@ -1332,7 +1467,10 @@ body{
       storyIntro: "The Cost Directive is still sealed. Cost pressure is building behind the glass.",
       storyActive: "The Cost Directive is active. Track the cost signals before the firm bleeds margin.",
       storyRestored: "The Cost Directive is secured. Cost structure is back under control.",
-      recoveryCode: "DIRECTIVE-SECURED"
+      recoveryCode: "DIRECTIVE-SECURED",
+      artifactName: "Cost Cipher",
+      artifactInitials: "CC",
+      artifactDescription: "Represents production discipline, cost structure, and knowing when scale helps or hurts."
     },
     market: {
       title: "The Market Signal",
@@ -1348,7 +1486,10 @@ body{
       storyIntro: "The Market Signal is still sealed. Demand signals remain scrambled.",
       storyActive: "The Market Signal is active. Read the market before the market reads you.",
       storyRestored: "The Market Signal is secured. Pricing intelligence is back online.",
-      recoveryCode: "SIGNAL-SECURED"
+      recoveryCode: "SIGNAL-SECURED",
+      artifactName: "Signal Lens",
+      artifactInitials: "SL",
+      artifactDescription: "Represents demand signals, elasticity, pricing response, and market interpretation."
     },
     desk: {
       title: "The Strategy Desk",
@@ -1364,7 +1505,10 @@ body{
       storyIntro: "The Strategy Desk is still sealed. Rival moves are hidden in the dark.",
       storyActive: "The Strategy Desk is active. Every move creates a countermove.",
       storyRestored: "The Strategy Desk is secured. Strategic control has been restored.",
-      recoveryCode: "DESK-SECURED"
+      recoveryCode: "DESK-SECURED",
+      artifactName: "Strategy Board",
+      artifactInitials: "SB",
+      artifactDescription: "Represents rivalry, strategic moves, countermoves, and firm decision rules under pressure."
     },
     agency: {
       title: "The Agency Protocol",
@@ -1382,7 +1526,33 @@ body{
       storyIntro: "The Agency Protocol is the first open file. Hidden information and bad incentives are loose in the system.",
       storyActive: "The Agency Protocol is active. Someone knows more than they should, someone else is taking the risk, and the incentives are probably a mess.",
       storyRestored: "The Agency Protocol is cleared. Hidden risks were found, incentives were aligned, and the file is secured.",
-      recoveryCode: "AGENCY-SECURED"
+      recoveryCode: "AGENCY-SECURED",
+      artifacts: [
+        {
+          name: "The Red Ledger",
+          source: "Underwriter of Hidden Risk",
+          image: "ledger.png",
+          meaning: "The Red Ledger represents adverse selection and the danger of pricing a deal when hidden risk is buried in the file.",
+          conceptPower: "Adverse selection happens before an agreement when one side has better information than the other and the worse risks are more likely to enter the deal.",
+          whyItMatters: "Students often treat hidden information like ordinary uncertainty. The ledger reminds them to ask who knows what before the contract is signed."
+        },
+        {
+          name: "The Glass Lens",
+          source: "Auditor of Moral Hazard",
+          image: "lens.png",
+          meaning: "The Glass Lens represents hidden action and the need to observe behavior after incentives have been created.",
+          conceptPower: "Moral hazard happens after an agreement when one party changes behavior because someone else bears part of the cost.",
+          whyItMatters: "Students often mix up hidden information with hidden action. The lens reminds them to ask whether the problem happens before or after the agreement."
+        },
+        {
+          name: "The Incentive Algorithm",
+          source: "Chief Architect of Incentives",
+          image: "algorithm.png",
+          meaning: "The Incentive Algorithm represents principal-agent problems and the work of aligning rewards, constraints, and behavior.",
+          conceptPower: "A principal-agent problem appears when the agent making decisions does not bear the same costs or receive the same benefits as the principal.",
+          whyItMatters: "Students need to see that incentives do not just describe behavior. They shape it. The algorithm reminds them that better design changes what people actually do."
+        }
+      ]
     }
   };
 
@@ -1394,6 +1564,7 @@ body{
     restoreSavedEmail();
     syncHubSaveFromExistingKeys();
     updateGameStatuses();
+    renderArtifactVault();
     restoreBriefingFolderState();
     updateSoundToggle();
 
@@ -1634,6 +1805,72 @@ body{
   function launchNextOperation(){
     if(!nextOperationKey || !games[nextOperationKey] || games[nextOperationKey].unavailable) return;
     selectGame(nextOperationKey);
+  }
+
+  function renderArtifactVault(){
+    const vault = document.getElementById("operationsArtifactVault");
+    if(!vault) return;
+
+    const orderedGames = Object.entries(games)
+      .sort((a, b) => (a[1].sequence || 99) - (b[1].sequence || 99));
+
+    const artifactEntries = [];
+
+    orderedGames.forEach(([key, game]) => {
+      const artifacts = Array.isArray(game.artifacts) && game.artifacts.length
+        ? game.artifacts
+        : [{
+            name: game.artifactName || `${game.title || key} Artifact`,
+            source: game.title || key,
+            image: game.artifactImage || "",
+            initials: game.artifactInitials || "",
+            meaning: game.artifactDescription || game.artifactText || "Artifact recovered from the completed operation.",
+            conceptPower: "",
+            whyItMatters: ""
+          }];
+
+      artifacts.forEach((artifact, index) => {
+        artifactEntries.push({ key, game, artifact, index });
+      });
+    });
+
+    vault.innerHTML = artifactEntries.map(({key, game, artifact, index}) => {
+      const completed = getStorageFlag(game.statusKey);
+      const started = getStorageFlag(game.startedKey);
+      const sealed = game.unavailable && !completed;
+      const stateClass = completed ? "unlocked" : "sealed";
+      const stateText = completed ? "Unlocked" : sealed ? "Sealed" : started ? "In Progress" : "Locked";
+      const artifactName = artifact.name || `${game.title || key} Artifact`;
+      const sourceText = artifact.source || game.title || key;
+      const initials = artifact.initials || artifactName.split(/\s+/).map(word => word[0]).join("").slice(0, 2).toUpperCase();
+      const imageMarkup = artifact.image
+        ? `<img class="artifact-image" src="${artifact.image}" alt="${artifactName}">`
+        : `<div class="artifact-emblem" aria-hidden="true">${initials}</div>`;
+
+      const lockedText = sealed
+        ? "This file is not open yet. The artifact remains sealed. Naturally. Locked files do locked-file things."
+        : started
+          ? "Operation is active. Clear the run to unlock the full artifact file."
+          : "Start and complete the operation to unlock the full artifact file.";
+
+      const meaning = completed ? (artifact.meaning || "Artifact recovered from the completed operation.") : lockedText;
+      const conceptPower = completed && artifact.conceptPower
+        ? `<div class="artifact-detail-label">Concept Power</div><div class="artifact-detail-text">${artifact.conceptPower}</div>`
+        : "";
+      const whyItMatters = completed && artifact.whyItMatters
+        ? `<div class="artifact-detail-label">Why It Matters</div><div class="artifact-detail-text">${artifact.whyItMatters}</div>`
+        : "";
+
+      return `
+        <div class="artifact-vault-slot ${stateClass}" data-artifact="${key}-${index}">
+          ${imageMarkup}
+          <div class="artifact-name">${artifactName}</div>
+          <div class="artifact-source">${sourceText}</div>
+          <div class="artifact-description">${meaning}${conceptPower}${whyItMatters}</div>
+          <div class="artifact-state">${stateText}</div>
+        </div>
+      `;
+    }).join("");
   }
 
   function renderOperationLog(){
