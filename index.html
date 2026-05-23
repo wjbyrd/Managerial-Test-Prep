@@ -1756,6 +1756,46 @@ body{
     catch(error){ return {}; }
   }
 
+  function getOperationSaveState(gameKey){
+    const save = getHubSave();
+    return save?.operations?.[gameKey] || {};
+  }
+
+  function isOperationCompleted(gameKey){
+    const game = games[gameKey];
+    if(!game) return false;
+
+    const savedState = getOperationSaveState(gameKey);
+    const aliasKeys = [
+      game.statusKey,
+      `${gameKey}Complete`,
+      `${gameKey}_complete`,
+      `${gameKey}_completed`,
+      `${gameKey}Completed`,
+      `${gameKey}Status`,
+      `managerialHub_${gameKey}_complete`,
+      `managerialHub_${gameKey}_completed`,
+      `managerialHub_${gameKey}_status`,
+      gameKey === "agency" ? "agencyProtocolComplete" : null,
+      gameKey === "agency" ? "agency_protocol_complete" : null,
+      gameKey === "agency" ? "agencyProtocol_completed" : null,
+      gameKey === "agency" ? "theAgencyProtocolComplete" : null,
+      gameKey === "agency" ? "agencyProtocolStatus" : null
+    ].filter(Boolean);
+
+    return aliasKeys.some(key => {
+      const value = String(localStorage.getItem(key) || "").toLowerCase();
+      return value === "true" || value === "complete" || value === "completed" || value === "cleared" || value === "secured";
+    }) || savedState.completed === true || String(savedState.status || "").toLowerCase() === "secured";
+  }
+
+  function isOperationStarted(gameKey){
+    const game = games[gameKey];
+    if(!game) return false;
+    const savedState = getOperationSaveState(gameKey);
+    return getStorageFlag(game.startedKey) || savedState.started === true || Boolean(savedState.room);
+  }
+
   function setHubSave(save){ localStorage.setItem(HUB_SAVE_KEY, JSON.stringify(save)); }
 
   function recordOperationProgress(gameKey, details = {}){
@@ -1788,8 +1828,8 @@ body{
     Object.keys(games).forEach(key => {
       const game = games[key];
       if(game.unavailable) return;
-      const completed = getStorageFlag(game.statusKey);
-      const started = getStorageFlag(game.startedKey);
+      const completed = isOperationCompleted(key);
+      const started = isOperationStarted(key);
       const room = localStorage.getItem(game.roomKey);
       if(completed || started || room){
         recordOperationProgress(key, { started, completed, room });
@@ -1881,7 +1921,7 @@ body{
     const nextReason = document.getElementById("nextOperationReason");
     const nextButton = document.getElementById("nextOperationButton");
 
-    nextOperationKey = getSortedOperationKeys(false).find(key => !getStorageFlag(games[key].statusKey)) || null;
+    nextOperationKey = getSortedOperationKeys(false).find(key => !isOperationCompleted(key)) || null;
 
     if(title){ title.innerText = `${clearedCount} of ${totalOperations} ${pluralize(totalOperations, "file", "files")} secured`; }
 
@@ -1914,7 +1954,7 @@ body{
       return;
     }
 
-    const activeKey = getSortedOperationKeys(false).find(key => getStorageFlag(games[key].startedKey) && !getStorageFlag(games[key].statusKey));
+    const activeKey = getSortedOperationKeys(false).find(key => isOperationStarted(key) && !isOperationCompleted(key));
     if(activeKey){
       narrative.innerText = games[activeKey].storyActive || "An operation is active. Finish the file.";
       return;
@@ -1951,8 +1991,8 @@ body{
     const artifactCards = [];
 
     orderedGames.forEach(([key, game]) => {
-      const completed = getStorageFlag(game.statusKey);
-      const started = getStorageFlag(game.startedKey);
+      const completed = isOperationCompleted(key);
+      const started = isOperationStarted(key);
       const sealed = game.unavailable && !completed;
       const artifacts = Array.isArray(game.artifacts) && game.artifacts.length
         ? game.artifacts
@@ -2106,6 +2146,13 @@ body{
     }
 
     localStorage.setItem(game.statusKey, "true");
+    localStorage.setItem(`${gameKey}Complete`, "true");
+    localStorage.setItem(`${gameKey}_complete`, "true");
+    localStorage.setItem(`managerialHub_${gameKey}_complete`, "true");
+    if(gameKey === "agency"){
+      localStorage.setItem("agencyProtocolComplete", "true");
+      localStorage.setItem("agency_protocol_complete", "true");
+    }
     localStorage.setItem(game.startedKey, "true");
     localStorage.setItem(game.roomKey, "30");
 
@@ -2118,6 +2165,7 @@ body{
 
     updateGameStatuses();
     renderOperationLog();
+    renderArtifactVault();
     message.className = "recovery-message success";
     message.innerText = `${game.title} restored on this device.`;
     codeInput.value = "";
@@ -2135,7 +2183,7 @@ body{
 
     recordOperationProgress(gameKey, {
       started: true,
-      completed: getStorageFlag(games[gameKey].statusKey),
+      completed: isOperationCompleted(gameKey),
       room: localStorage.getItem(games[gameKey].roomKey),
       logMessage: `${games[gameKey].title} opened from the Managerial Test Prep hub.`
     });
