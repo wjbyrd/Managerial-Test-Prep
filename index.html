@@ -734,6 +734,334 @@ body{
       flex-direction:column;
     }
   }
+
+
+/* =========================================================
+   UPGRADE: Managerial Operations Briefing + Menu System
+   - Ported from The Economic Realm hub structure.
+   - Keeps the noir/corporate style while adding compact status,
+     next operation guidance, recovery, card state hooks, and logs.
+   ========================================================= */
+.operations-menu-button{
+  position:fixed;
+  right:28px;
+  bottom:24px;
+  z-index:12;
+  display:none;
+  padding:10px 14px;
+  border-radius:999px;
+  border:1px solid rgba(107,200,255,.24);
+  background:rgba(0,0,0,.52);
+  color:rgba(220,240,255,.76);
+  cursor:pointer;
+  font-size:11px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  box-shadow:0 0 18px rgba(0,0,0,.50), 0 0 18px rgba(107,200,255,.08);
+}
+
+.operations-menu-button.visible{display:block;}
+.operations-menu-button:hover{
+  color:#fff;
+  border-color:rgba(107,200,255,.46);
+  background:rgba(107,200,255,.10);
+}
+
+.briefing-folder{
+  width:min(760px, 100%);
+  margin:22px auto 0;
+  border-radius:18px;
+  border:1px solid rgba(107,200,255,.22);
+  background:
+    linear-gradient(135deg, rgba(107,200,255,.10), transparent 38%),
+    radial-gradient(circle at top, rgba(255,255,255,.08), transparent 55%),
+    rgba(0,0,0,.44);
+  box-shadow:
+    0 0 28px rgba(107,200,255,.10),
+    0 0 48px rgba(0,0,0,.48),
+    inset 0 0 24px rgba(255,255,255,.03);
+  overflow:hidden;
+}
+
+.briefing-folder-header{
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  padding:16px 18px;
+  border:none;
+  background:transparent;
+  color:#fff;
+  cursor:pointer;
+  text-align:left;
+}
+
+.briefing-folder-label{
+  font-size:10px;
+  letter-spacing:.24em;
+  text-transform:uppercase;
+  color:rgba(173,222,255,.50);
+  margin-bottom:5px;
+}
+
+.briefing-folder-title{
+  font-size:20px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:rgba(244,250,255,.94);
+  font-weight:700;
+  text-shadow:0 0 16px rgba(107,200,255,.18);
+}
+
+.briefing-folder-subtext{
+  margin-top:5px;
+  font-size:13px;
+  letter-spacing:.06em;
+  color:rgba(220,236,255,.60);
+}
+
+.briefing-folder-toggle{
+  flex:0 0 auto;
+  padding:8px 12px;
+  border-radius:999px;
+  border:1px solid rgba(107,200,255,.22);
+  color:rgba(220,236,255,.72);
+  font-size:10px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+}
+
+.briefing-folder-body{display:none; padding:0 18px 18px;}
+.briefing-folder.open .briefing-folder-body{display:block;}
+
+.briefing-section{
+  margin-top:12px;
+  padding:14px;
+  border-radius:14px;
+  border:1px solid rgba(107,200,255,.14);
+  background:
+    linear-gradient(180deg, rgba(107,200,255,.065), rgba(255,255,255,.025)),
+    rgba(0,0,0,.28);
+  text-align:center;
+}
+
+.briefing-section-label{
+  font-size:10px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:rgba(173,222,255,.46);
+  margin-bottom:6px;
+}
+
+.next-operation-title{
+  font-size:18px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  font-weight:700;
+  color:rgba(255,255,255,.94);
+}
+
+.next-operation-reason{
+  max-width:560px;
+  margin:6px auto 11px;
+  font-size:13px;
+  line-height:1.4;
+  color:rgba(220,236,255,.62);
+  letter-spacing:.04em;
+}
+
+.next-operation-button{
+  padding:10px 15px;
+  border-radius:999px;
+  border:1px solid rgba(107,200,255,.24);
+  background:linear-gradient(180deg, rgba(107,200,255,.16), rgba(255,255,255,.05));
+  color:rgba(255,255,255,.88);
+  cursor:pointer;
+  font-size:11px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+}
+
+.next-operation-button:hover{
+  color:#fff;
+  border-color:rgba(107,200,255,.50);
+  box-shadow:0 0 20px rgba(107,200,255,.10);
+}
+
+.next-operation-button:disabled{opacity:.48; cursor:default;}
+
+.operations-narrative-text{
+  max-width:620px;
+  margin:0 auto;
+  font-size:13px;
+  line-height:1.45;
+  color:rgba(220,236,255,.66);
+  letter-spacing:.045em;
+}
+
+.mission-briefing{
+  margin:-6px 0 14px;
+  font-size:13px;
+  line-height:1.35;
+  color:rgba(220,236,255,.52);
+  letter-spacing:.045em;
+}
+
+.restored-badge{
+  display:none;
+  margin:0 0 14px;
+  padding:9px 11px;
+  border-radius:12px;
+  border:1px solid rgba(107,200,255,.32);
+  background:
+    radial-gradient(circle at left, rgba(107,200,255,.18), transparent 58%),
+    rgba(255,255,255,.055);
+  color:rgba(255,255,255,.84);
+  font-size:12px;
+  letter-spacing:.09em;
+  text-transform:uppercase;
+}
+
+.game-card.restored{
+  border-color:rgba(107,200,255,.48);
+  box-shadow:
+    0 24px 70px rgba(0,0,0,.72),
+    0 0 34px rgba(107,200,255,.20),
+    inset 0 0 0 1px rgba(255,255,255,.08);
+}
+
+.game-card.contested{
+  border-color:rgba(245,158,11,.42);
+  box-shadow:
+    0 20px 54px rgba(0,0,0,.66),
+    0 0 26px rgba(245,158,11,.14),
+    inset 0 0 0 1px rgba(255,255,255,.05);
+}
+
+.game-card.unstable{filter:saturate(.92);}
+.game-card.locked{opacity:.54; filter:grayscale(.35) saturate(.65);}
+.game-card.locked .enter-btn{cursor:not-allowed; opacity:.55;}
+
+.game-card.restored .game-thumb::before,
+.game-card.contested .game-thumb::before,
+.game-card.locked .game-thumb::before{
+  position:absolute;
+  top:14px;
+  right:14px;
+  z-index:2;
+  padding:7px 10px;
+  border-radius:999px;
+  font-size:10px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  font-weight:700;
+  backdrop-filter:blur(6px);
+}
+
+.game-card.restored .game-thumb::before{
+  content:"File Secured";
+  color:rgba(255,255,255,.94);
+  border:1px solid rgba(107,200,255,.50);
+  background:linear-gradient(180deg, rgba(107,200,255,.24), rgba(0,0,0,.42));
+}
+
+.game-card.contested .game-thumb::before{
+  content:"Active File";
+  color:rgba(255,255,255,.90);
+  border:1px solid rgba(245,158,11,.40);
+  background:linear-gradient(180deg, rgba(245,158,11,.22), rgba(0,0,0,.42));
+}
+
+.game-card.locked .game-thumb::before{
+  content:"Sealed";
+  color:rgba(255,255,255,.70);
+  border:1px solid rgba(255,255,255,.18);
+  background:rgba(0,0,0,.52);
+}
+
+.operations-menu-modal{
+  position:fixed;
+  inset:0;
+  z-index:25;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+  background:rgba(0,0,0,.74);
+  backdrop-filter:blur(6px);
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transition:opacity .22s ease, visibility .22s ease;
+}
+
+.operations-menu-modal.active{opacity:1; visibility:visible; pointer-events:auto;}
+
+.operations-menu-card{
+  width:min(840px, 100%);
+  max-height:85vh;
+  overflow:auto;
+  background:rgba(0,0,0,.96);
+  border:1px solid rgba(107,200,255,.24);
+  border-radius:16px;
+  box-shadow:0 24px 70px rgba(0,0,0,.8), 0 0 30px rgba(107,200,255,.08);
+  padding:24px;
+}
+
+.operations-menu-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  margin-bottom:16px;
+  padding-bottom:12px;
+  border-bottom:1px solid rgba(255,255,255,.10);
+}
+
+.operations-menu-title{margin:0; font-size:28px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;}
+.operations-menu-actions{display:flex; flex-wrap:wrap; gap:10px; margin-bottom:18px;}
+.operations-menu-action{
+  padding:10px 13px;
+  border-radius:999px;
+  border:1px solid rgba(107,200,255,.18);
+  background:rgba(107,200,255,.07);
+  color:rgba(255,255,255,.82);
+  cursor:pointer;
+  font-size:12px;
+  letter-spacing:.10em;
+  text-transform:uppercase;
+}
+.operations-menu-action:hover{color:#fff; border-color:rgba(107,200,255,.38); background:rgba(107,200,255,.12);}
+.operations-panel{display:none; color:rgba(255,255,255,.82); font-size:15px; line-height:1.65;}
+.operations-panel.active{display:block;}
+.operation-log-entry{padding:12px 0; border-bottom:1px solid rgba(255,255,255,.10);}
+.operation-log-entry-title{font-size:13px; letter-spacing:.12em; text-transform:uppercase; color:rgba(255,255,255,.92);}
+.operation-log-entry-time{margin-top:4px; font-size:12px; color:rgba(255,255,255,.48);}
+.recovery-grid{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:12px;}
+.recovery-grid select,.recovery-grid input{
+  width:100%;
+  padding:13px;
+  border-radius:10px;
+  border:1px solid rgba(107,200,255,.20);
+  background:rgba(0,0,0,.42);
+  color:#fff;
+}
+.recovery-message{margin-top:12px; font-size:14px; color:rgba(255,255,255,.68);}
+.recovery-message.success{color:#93c5fd;}
+.recovery-message.error{color:#fca5a5;}
+
+@media(max-width:680px){
+  .operations-menu-button{right:14px; bottom:14px; padding:8px 10px; font-size:10px;}
+  .briefing-folder-header{padding:14px;}
+  .briefing-folder-title{font-size:17px;}
+  .briefing-folder-subtext{font-size:12px;}
+  .recovery-grid{grid-template-columns:1fr;}
+  .game-card.restored .game-thumb::before,
+  .game-card.contested .game-thumb::before,
+  .game-card.locked .game-thumb::before{top:10px; right:10px; font-size:9px; padding:6px 8px;}
+}
+
 </style>
 </head>
 
@@ -749,6 +1077,10 @@ body{
   How This Works
   </button>
 
+  <button id="operationsMenuButton" class="operations-menu-button" onclick="openOperationsMenu()" aria-label="Open operations menu">
+    Operations Menu
+  </button>
+
   <main id="mainMenu" aria-label="Game selection menu">
     <div class="menu-overlay"></div>
     <video class="menu-video-bg" autoplay muted loop playsinline aria-hidden="true">
@@ -760,11 +1092,34 @@ body{
         <h1 class="menu-title">Choose Your Operation</h1>
         <p class="menu-subtitle">Select the operation you want to run. Each operation targets a different set of concepts, adapts to your performance, and reports completion when you finish.</p>
 
-        <div class="realm-status-panel" aria-label="Managerial operations status">
-          <div class="realm-status-label">Agency Operations Status</div>
-          <div id="realmStatusText" class="realm-status-text">0 of 1 operations cleared</div>
-          <div id="realmStatusSubtext" class="realm-status-subtext">
-            The active operations remains unresolved. Complete the them all to secure the top secret files.
+        <div class="briefing-folder collapsed" id="briefingFolder">
+          <button class="briefing-folder-header" onclick="toggleBriefingFolder()" aria-expanded="false" aria-controls="briefingFolderBody">
+            <div>
+              <div class="briefing-folder-label">Operations Briefing</div>
+              <div id="briefingFolderTitle" class="briefing-folder-title">0 of 1 files secured</div>
+              <div id="briefingFolderSubtext" class="briefing-folder-subtext">Next Operation: The Agency Protocol</div>
+            </div>
+            <span id="briefingFolderToggle" class="briefing-folder-toggle">Open</span>
+          </button>
+
+          <div class="briefing-folder-body" id="briefingFolderBody">
+            <div id="nextOperationBox" class="briefing-section next-operation-box">
+              <div class="briefing-section-label">Next Operation</div>
+              <div id="nextOperationTitle" class="next-operation-title">The Agency Protocol</div>
+              <div id="nextOperationReason" class="next-operation-reason">
+                Close the first active file by identifying hidden information problems and incentive failures.
+              </div>
+              <button id="nextOperationButton" class="next-operation-button" onclick="launchNextOperation()">
+                Begin Next Operation
+              </button>
+            </div>
+
+            <div id="operationsNarrativeBox" class="briefing-section operations-narrative-box">
+              <div class="briefing-section-label">Agency Briefing</div>
+              <div id="operationsNarrativeText" class="operations-narrative-text">
+                The files are sealed. Clear each operation as it comes online to lock down the managerial system.
+              </div>
+            </div>
           </div>
         </div>
       </header>
@@ -775,6 +1130,8 @@ body{
     <div class="game-content">
       <h2 class="game-title">The Cost Directive</h2>
       <p class="game-tagline">Coming soon.</p>
+      <p class="mission-briefing" id="briefing-directive">Sealed file. Cost structure, production decisions, and profit logic will come online later.</p>
+      <div class="restored-badge" id="badge-directive">File secured</div>
       <div class="topic-list">
         <span class="topic-chip">Coming Soon</span>
       </div>
@@ -790,6 +1147,8 @@ body{
     <div class="game-content">
       <h2 class="game-title">The Market Signal</h2>
       <p class="game-tagline">Coming soon.</p>
+      <p class="mission-briefing" id="briefing-market">Sealed file. Demand, pricing, elasticity, and market response analysis will come online later.</p>
+      <div class="restored-badge" id="badge-market">File secured</div>
       <div class="topic-list">
         <span class="topic-chip">Coming Soon</span>
       </div>
@@ -805,6 +1164,8 @@ body{
     <div class="game-content">
       <h2 class="game-title">The Strategy Desk</h2>
       <p class="game-tagline">Coming soon.</p>
+      <p class="mission-briefing" id="briefing-desk">Sealed file. Strategic behavior, firm rivalry, and organizational control will come online later.</p>
+      <div class="restored-badge" id="badge-desk">File secured</div>
       <div class="topic-list">
         <span class="topic-chip">Coming Soon</span>
       </div>
@@ -820,6 +1181,8 @@ body{
     <div class="game-content">
       <h2 class="game-title">The Agency Protocol</h2>
       <p class="game-tagline">Find hidden risks and align incentives.</p>
+      <p class="mission-briefing" id="briefing-agency">Active file. Detect adverse selection, moral hazard, principal-agent conflict, and broken incentive design.</p>
+      <div class="restored-badge" id="badge-agency">Protocol secured · File closed</div>
       <div class="topic-list">
         <span class="topic-chip">Moral Hazard</span>
         <span class="topic-chip">Adverse Selection</span>
@@ -859,6 +1222,50 @@ body{
       </ul>
 
       <p>When you enter an operation, use your school email on that game’s start screen so your progress can be recorded.</p>
+    </div>
+  </div>
+</section>
+
+<section id="operationsMenuModal" class="operations-menu-modal" aria-label="Operations menu dialog">
+  <div class="operations-menu-card">
+    <div class="operations-menu-header">
+      <h2 class="operations-menu-title">Operations Menu</h2>
+      <button class="help-close-btn" onclick="closeOperationsMenu()" aria-label="Close operations menu">Close ×</button>
+    </div>
+
+    <div class="operations-menu-actions">
+      <button class="operations-menu-action" onclick="showOperationsPanel('instructionsPanel')">How This Works</button>
+      <button class="operations-menu-action" onclick="showOperationsPanel('operationLogPanel')">Operation Log</button>
+      <button class="operations-menu-action" onclick="showOperationsPanel('recoveryPanel')">Recover Progress</button>
+      <button class="operations-menu-action" onclick="toggleMenuMusic()">Toggle Sound</button>
+    </div>
+
+    <div id="instructionsPanel" class="operations-panel active">
+      <p>Choose an operation to begin reviewing. Each operation targets a different part of managerial economics and adapts to your performance as you play.</p>
+      <ul>
+        <li>Correct answers move you forward.</li>
+        <li>Missed questions may send you back or trigger review.</li>
+        <li>Boss rooms check whether you are ready to advance.</li>
+        <li>Completion is reported when you finish an operation.</li>
+        <li>Progress is saved locally, so you can close the browser and resume later.</li>
+      </ul>
+      <p>Use your school email on the game start screen so the run can be recorded.</p>
+    </div>
+
+    <div id="operationLogPanel" class="operations-panel">
+      <div id="operationLogContent">No operation activity recorded yet.</div>
+    </div>
+
+    <div id="recoveryPanel" class="operations-panel">
+      <p>If a browser wipe removes local progress, use the completion recovery code from the finished operation to restore the cleared file on this device.</p>
+      <div class="recovery-grid">
+        <select id="recoveryOperation">
+          <option value="agency">The Agency Protocol</option>
+        </select>
+        <input id="recoveryCode" type="text" placeholder="Enter recovery code">
+      </div>
+      <button class="next-operation-button" style="margin-top:12px;" onclick="restoreOperationFromCode()">Restore Operation</button>
+      <div id="recoveryMessage" class="recovery-message"></div>
     </div>
   </div>
 </section>
@@ -918,7 +1325,14 @@ body{
       startedKey: "managerialHub_directive_started",
       roomKey: "managerialHub_directive_room",
       unavailable: true,
-      offlineText: "Coming Soon"
+      offlineText: "Coming Soon",
+      sequence: 2,
+      buttonText: "Enter Directive",
+      nextReason: "Review production, costs, and profit logic once this file is opened.",
+      storyIntro: "The Cost Directive is still sealed. Cost pressure is building behind the glass.",
+      storyActive: "The Cost Directive is active. Track the cost signals before the firm bleeds margin.",
+      storyRestored: "The Cost Directive is secured. Cost structure is back under control.",
+      recoveryCode: "DIRECTIVE-SECURED"
     },
     market: {
       title: "The Market Signal",
@@ -927,16 +1341,30 @@ body{
       startedKey: "managerialHub_market_started",
       roomKey: "managerialHub_market_room",
       unavailable: true,
-      offlineText: "Coming Soon"
+      offlineText: "Coming Soon",
+      sequence: 3,
+      buttonText: "Enter Signal",
+      nextReason: "Review demand, pricing, elasticity, and market response once this file is opened.",
+      storyIntro: "The Market Signal is still sealed. Demand signals remain scrambled.",
+      storyActive: "The Market Signal is active. Read the market before the market reads you.",
+      storyRestored: "The Market Signal is secured. Pricing intelligence is back online.",
+      recoveryCode: "SIGNAL-SECURED"
     },
     desk: {
-     title: "The Strategy Desk",
-     file: "https://wjbyrd.github.io/The-Strategy-Desk/",
-     statusKey: "managerialHub_desk_complete",
-     startedKey: "managerialHub_desk_started",
-     roomKey: "managerialHub_desk_room",
-     unavailable: true,
-     offlineText: "Coming Soon"
+      title: "The Strategy Desk",
+      file: "https://wjbyrd.github.io/The-Strategy-Desk/",
+      statusKey: "managerialHub_desk_complete",
+      startedKey: "managerialHub_desk_started",
+      roomKey: "managerialHub_desk_room",
+      unavailable: true,
+      offlineText: "Coming Soon",
+      sequence: 4,
+      buttonText: "Enter Desk",
+      nextReason: "Review strategic behavior, rivalry, and firm decision-making once this file is opened.",
+      storyIntro: "The Strategy Desk is still sealed. Rival moves are hidden in the dark.",
+      storyActive: "The Strategy Desk is active. Every move creates a countermove.",
+      storyRestored: "The Strategy Desk is secured. Strategic control has been restored.",
+      recoveryCode: "DESK-SECURED"
     },
     agency: {
       title: "The Agency Protocol",
@@ -946,16 +1374,27 @@ body{
       roomKey: "managerialHub_agency_room",
       unstableText: "Protocol Unopened",
       contestedText: "Protocol Active",
-      restoredText: "Protocol Cleared"
+      restoredText: "Protocol Cleared",
+      artifactText: "Protocol secured · File closed",
+      sequence: 1,
+      buttonText: "Enter Agency",
+      nextReason: "Close the first active file by reviewing adverse selection, moral hazard, principal-agent problems, and incentive design.",
+      storyIntro: "The Agency Protocol is the first open file. Hidden information and bad incentives are loose in the system.",
+      storyActive: "The Agency Protocol is active. Someone knows more than they should, someone else is taking the risk, and the incentives are probably a mess.",
+      storyRestored: "The Agency Protocol is cleared. Hidden risks were found, incentives were aligned, and the file is secured.",
+      recoveryCode: "AGENCY-SECURED"
     }
-
   };
 
   let selectedGame = null;
+  let nextOperationKey = null;
+  const HUB_SAVE_KEY = "managerialHub_save_v1";
 
   window.addEventListener("load", () => {
     restoreSavedEmail();
+    syncHubSaveFromExistingKeys();
     updateGameStatuses();
+    restoreBriefingFolderState();
     updateSoundToggle();
 
     setTimeout(() => {
@@ -967,8 +1406,7 @@ body{
   function enterHub(){
     document.getElementById("splashScreen").classList.add("hidden");
     document.getElementById("mainMenu").classList.add("active");
-    showSoundToggle();
-    showHelpButton();
+    showOperationsMenuButton();
     startMenuMusic();
   }
 
@@ -980,44 +1418,137 @@ body{
     }
   }
 
-function showHelpButton(){
-  const button = document.getElementById("helpButton");
-  if(button){
-    button.classList.add("visible");
-  }
-}
-
-function openHelpModal(){
-  document.getElementById("helpModal").classList.add("active");
-}
-
-function closeHelpModal(){
-  document.getElementById("helpModal").classList.remove("active");
-}
-
-  function pluralize(count, singular, plural){
-    return count === 1 ? singular : plural;
+  function showHelpButton(){
+    const button = document.getElementById("helpButton");
+    if(button){ button.classList.add("visible"); }
   }
 
-  function getStorageFlag(key){
-    return localStorage.getItem(key) === "true";
+  function openHelpModal(){ document.getElementById("helpModal").classList.add("active"); }
+  function closeHelpModal(){ document.getElementById("helpModal").classList.remove("active"); }
+
+  function showOperationsMenuButton(){
+    const button = document.getElementById("operationsMenuButton");
+    if(button){ button.classList.add("visible"); }
+  }
+
+  function openOperationsMenu(){
+    renderOperationLog();
+    document.getElementById("operationsMenuModal").classList.add("active");
+  }
+
+  function closeOperationsMenu(){ document.getElementById("operationsMenuModal").classList.remove("active"); }
+
+  function showOperationsPanel(panelId){
+    document.querySelectorAll(".operations-panel").forEach(panel => panel.classList.remove("active"));
+    const panel = document.getElementById(panelId);
+    if(panel){ panel.classList.add("active"); }
+    if(panelId === "operationLogPanel"){ renderOperationLog(); }
+    if(panelId === "recoveryPanel"){
+      const message = document.getElementById("recoveryMessage");
+      const codeInput = document.getElementById("recoveryCode");
+      if(message){ message.className = "recovery-message"; message.innerText = ""; }
+      if(codeInput){ codeInput.value = ""; }
+    }
+  }
+
+  function pluralize(count, singular, plural){ return count === 1 ? singular : plural; }
+  function getStorageFlag(key){ return localStorage.getItem(key) === "true"; }
+
+  function getHubSave(){
+    try { return JSON.parse(localStorage.getItem(HUB_SAVE_KEY) || "{}"); }
+    catch(error){ return {}; }
+  }
+
+  function setHubSave(save){ localStorage.setItem(HUB_SAVE_KEY, JSON.stringify(save)); }
+
+  function recordOperationProgress(gameKey, details = {}){
+    const game = games[gameKey];
+    if(!game) return;
+
+    const save = getHubSave();
+    save.operations = save.operations || {};
+    save.log = save.log || [];
+    save.operations[gameKey] = {
+      started: details.started ?? getStorageFlag(game.startedKey),
+      completed: details.completed ?? getStorageFlag(game.statusKey),
+      room: details.room ?? localStorage.getItem(game.roomKey) ?? null,
+      updatedAt: Date.now()
+    };
+
+    if(details.logMessage){
+      save.log.unshift({
+        mission: game.title,
+        message: details.logMessage,
+        timestamp: Date.now()
+      });
+      save.log = save.log.slice(0, 30);
+    }
+
+    setHubSave(save);
+  }
+
+  function syncHubSaveFromExistingKeys(){
+    Object.keys(games).forEach(key => {
+      const game = games[key];
+      if(game.unavailable) return;
+      const completed = getStorageFlag(game.statusKey);
+      const started = getStorageFlag(game.startedKey);
+      const room = localStorage.getItem(game.roomKey);
+      if(completed || started || room){
+        recordOperationProgress(key, { started, completed, room });
+      }
+    });
+  }
+
+  function toggleBriefingFolder(){
+    const folder = document.getElementById("briefingFolder");
+    const button = document.querySelector(".briefing-folder-header");
+    const toggle = document.getElementById("briefingFolderToggle");
+    if(!folder) return;
+
+    const isOpen = folder.classList.toggle("open");
+    folder.classList.toggle("collapsed", !isOpen);
+    if(button){ button.setAttribute("aria-expanded", isOpen ? "true" : "false"); }
+    if(toggle){ toggle.innerText = isOpen ? "Close" : "Open"; }
+    localStorage.setItem("managerialHub_briefingOpen", isOpen ? "true" : "false");
+  }
+
+  function restoreBriefingFolderState(){
+    const shouldOpen = localStorage.getItem("managerialHub_briefingOpen") === "true";
+    const folder = document.getElementById("briefingFolder");
+    const button = document.querySelector(".briefing-folder-header");
+    const toggle = document.getElementById("briefingFolderToggle");
+    if(!folder) return;
+    folder.classList.toggle("open", shouldOpen);
+    folder.classList.toggle("collapsed", !shouldOpen);
+    if(button){ button.setAttribute("aria-expanded", shouldOpen ? "true" : "false"); }
+    if(toggle){ toggle.innerText = shouldOpen ? "Close" : "Open"; }
+  }
+
+  function getSortedOperationKeys(includeUnavailable = false){
+    return Object.keys(games)
+      .filter(key => includeUnavailable || !games[key].unavailable)
+      .sort((a, b) => (games[a].sequence || 999) - (games[b].sequence || 999));
   }
 
   function updateGameStatuses(){
     let clearedCount = 0;
     let contestedCount = 0;
-    const activeKeys = Object.keys(games).filter(key => !games[key].unavailable);
+    const activeKeys = getSortedOperationKeys(false);
     const totalOperations = activeKeys.length;
 
-    Object.keys(games).forEach(key => {
-      const statusElement = document.getElementById("status-" + key);
-      if(!statusElement) return;
-
+    getSortedOperationKeys(true).forEach(key => {
       const game = games[key];
+      const statusElement = document.getElementById("status-" + key);
+      const card = statusElement ? statusElement.closest(".game-card") : document.querySelector(".game-card." + key);
+      if(card){ card.classList.remove("restored", "contested", "unstable", "locked"); }
+
+      if(!statusElement) return;
 
       if(game.unavailable){
         statusElement.innerText = game.offlineText || "Coming Soon";
         statusElement.dataset.realmState = "offline";
+        if(card){ card.classList.add("locked"); }
         return;
       }
 
@@ -1028,59 +1559,178 @@ function closeHelpModal(){
       if(completed){
         statusElement.innerText = game.restoredText || "Cleared";
         statusElement.dataset.realmState = "restored";
+        if(card){ card.classList.add("restored"); }
         clearedCount++;
       } else if(started){
         statusElement.innerText = room ? `${game.contestedText || "Active"} · Room ${room}` : (game.contestedText || "Active");
         statusElement.dataset.realmState = "contested";
+        if(card){ card.classList.add("contested"); }
         contestedCount++;
       } else {
         statusElement.innerText = game.unstableText || "Ready";
         statusElement.dataset.realmState = "unstable";
+        if(card){ card.classList.add("unstable"); }
       }
     });
 
-    const realmStatus = document.getElementById("realmStatusText");
-    const realmSubtext = document.getElementById("realmStatusSubtext");
-
-    if(realmStatus){
-      realmStatus.innerText = `${clearedCount} of ${totalOperations} operations cleared`;
-    }
-
-    if(realmSubtext){
-      if(totalOperations === 0){
-        realmSubtext.innerText = "No active operations are available yet. The agency file remains sealed.";
-      } else if(clearedCount === totalOperations){
-        realmSubtext.innerText = "The active operation is cleared. The file is secured.";
-      } else if(clearedCount > 0 && contestedCount > 0){
-        realmSubtext.innerText =
-          `${clearedCount} ${pluralize(clearedCount, "operation", "operations")} cleared, ` +
-          `${contestedCount} ${pluralize(contestedCount, "operation", "operations")} active. Finish the active file to secure the system.`;
-      } else if(clearedCount > 0){
-        realmSubtext.innerText =
-          `${clearedCount} ${pluralize(clearedCount, "operation", "operations")} cleared. Continue through the remaining active files.`;
-      } else if(contestedCount > 0){
-        realmSubtext.innerText =
-          `${contestedCount} ${pluralize(contestedCount, "operation", "operations")} active. Finish the run to close the file.`;
-      } else {
-        realmSubtext.innerText = "The active protocol remains unresolved. Complete the available operation to secure the file.";
-      }
-    }
+    updateBriefingSummary(clearedCount, contestedCount, totalOperations);
+    updateOperationsNarrative(clearedCount, contestedCount, totalOperations);
   }
 
-  
-function selectGame(gameKey){
+  function updateBriefingSummary(clearedCount, contestedCount, totalOperations){
+    const title = document.getElementById("briefingFolderTitle");
+    const subtext = document.getElementById("briefingFolderSubtext");
+    const nextTitle = document.getElementById("nextOperationTitle");
+    const nextReason = document.getElementById("nextOperationReason");
+    const nextButton = document.getElementById("nextOperationButton");
+
+    nextOperationKey = getSortedOperationKeys(false).find(key => !getStorageFlag(games[key].statusKey)) || null;
+
+    if(title){ title.innerText = `${clearedCount} of ${totalOperations} ${pluralize(totalOperations, "file", "files")} secured`; }
+
+    if(!nextOperationKey){
+      if(subtext){ subtext.innerText = totalOperations ? "All active operations secured" : "No active operations available"; }
+      if(nextTitle){ nextTitle.innerText = totalOperations ? "All Active Files Secured" : "No Active Files"; }
+      if(nextReason){ nextReason.innerText = totalOperations ? "The active managerial file is locked down." : "The agency is waiting for the next operation to come online."; }
+      if(nextButton){ nextButton.innerText = "No Active Operation"; nextButton.disabled = true; }
+      return;
+    }
+
+    const nextGame = games[nextOperationKey];
+    if(subtext){ subtext.innerText = `Next Operation: ${nextGame.title}`; }
+    if(nextTitle){ nextTitle.innerText = nextGame.title; }
+    if(nextReason){ nextReason.innerText = nextGame.nextReason || "Begin the next available operation."; }
+    if(nextButton){ nextButton.innerText = "Begin Next Operation"; nextButton.disabled = false; }
+  }
+
+  function updateOperationsNarrative(clearedCount, contestedCount, totalOperations){
+    const narrative = document.getElementById("operationsNarrativeText");
+    if(!narrative) return;
+
+    if(totalOperations === 0){
+      narrative.innerText = "No active operations are available yet. The agency file remains sealed.";
+      return;
+    }
+
+    if(clearedCount === totalOperations){
+      narrative.innerText = "The active operation is cleared. The file is secured. Nobody gets to pretend the incentives were fine. They weren't.";
+      return;
+    }
+
+    const activeKey = getSortedOperationKeys(false).find(key => getStorageFlag(games[key].startedKey) && !getStorageFlag(games[key].statusKey));
+    if(activeKey){
+      narrative.innerText = games[activeKey].storyActive || "An operation is active. Finish the file.";
+      return;
+    }
+
+    if(nextOperationKey){
+      narrative.innerText = games[nextOperationKey].storyIntro || "Begin the next operation to secure the system.";
+      return;
+    }
+
+    narrative.innerText = `${clearedCount} ${pluralize(clearedCount, "operation", "operations")} cleared. Keep moving.`;
+  }
+
+  function launchNextOperation(){
+    if(!nextOperationKey || !games[nextOperationKey] || games[nextOperationKey].unavailable) return;
+    selectGame(nextOperationKey);
+  }
+
+  function renderOperationLog(){
+    const container = document.getElementById("operationLogContent");
+    if(!container) return;
+    const save = getHubSave();
+    const log = save.log || [];
+
+    if(log.length === 0){
+      container.innerHTML = "No operation activity recorded yet.";
+      return;
+    }
+
+    container.innerHTML = log.map(entry => {
+      const date = new Date(entry.timestamp);
+      const readableDate = isNaN(date) ? "" : date.toLocaleString();
+      return `
+        <div class="operation-log-entry">
+          <div class="operation-log-entry-title">${entry.message}</div>
+          <div class="operation-log-entry-time">${entry.mission || "Operations"} · ${readableDate}</div>
+        </div>
+      `;
+    }).join("");
+  }
+
+  function normalizeRecoveryCode(value){
+    return String(value || "").trim().toUpperCase().replace(/\s+/g, "");
+  }
+
+  function restoreOperationFromCode(){
+    const operationSelect = document.getElementById("recoveryOperation");
+    const codeInput = document.getElementById("recoveryCode");
+    const message = document.getElementById("recoveryMessage");
+    if(!operationSelect || !codeInput || !message) return;
+
+    const gameKey = operationSelect.value;
+    const game = games[gameKey];
+    if(!game){
+      message.className = "recovery-message error";
+      message.innerText = "Operation not found.";
+      return;
+    }
+
+    const enteredCode = normalizeRecoveryCode(codeInput.value);
+    const expectedCode = normalizeRecoveryCode(game.recoveryCode);
+
+    if(!enteredCode){
+      message.className = "recovery-message error";
+      message.innerText = "Enter a recovery code first.";
+      return;
+    }
+
+    if(!expectedCode || enteredCode !== expectedCode){
+      message.className = "recovery-message error";
+      message.innerText = "That recovery code does not match this operation.";
+      return;
+    }
+
+    localStorage.setItem(game.statusKey, "true");
+    localStorage.setItem(game.startedKey, "true");
+    localStorage.setItem(game.roomKey, "30");
+
+    recordOperationProgress(gameKey, {
+      started: true,
+      completed: true,
+      room: 30,
+      logMessage: `${game.title} restored from recovery code.`
+    });
+
+    updateGameStatuses();
+    renderOperationLog();
+    message.className = "recovery-message success";
+    message.innerText = `${game.title} restored on this device.`;
+    codeInput.value = "";
+  }
+
+  function selectGame(gameKey){
     if(!games[gameKey] || games[gameKey].unavailable){
-      alert("Select a game first.");
+      alert("That operation is still sealed.");
       return;
     }
 
     localStorage.setItem("selectedGauntlet", gameKey);
     localStorage.setItem("selectedMission", gameKey);
+    localStorage.setItem(games[gameKey].startedKey, "true");
+
+    recordOperationProgress(gameKey, {
+      started: true,
+      completed: getStorageFlag(games[gameKey].statusKey),
+      room: localStorage.getItem(games[gameKey].roomKey),
+      logMessage: `${games[gameKey].title} opened from the Managerial Test Prep hub.`
+    });
 
     stopMenuMusic();
     window.location.href = games[gameKey].file;
   }
-  
+
  document.addEventListener("keydown", event => {
   if(event.key === "Escape"){
     const helpModal = document.getElementById("helpModal");
@@ -1098,5 +1748,6 @@ function selectGame(gameKey){
 </script>
 </body>
 </html>
+
 
 
