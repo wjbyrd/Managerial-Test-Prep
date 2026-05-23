@@ -1055,115 +1055,128 @@ body{
 /* Operations Artifact Vault */
 .artifact-vault-grid{
   display:grid;
-  grid-template-columns:repeat(4, minmax(0, 1fr));
-  gap:14px;
+  grid-template-columns:repeat(2, minmax(0, 1fr));
+  gap:12px;
   margin-top:14px;
 }
 
-.artifact-vault-slot{
-  position:relative;
-  min-height:210px;
-  padding:16px 14px 14px;
-  border-radius:16px;
+.artifact-card{
+  padding:14px;
+  border-radius:14px;
   border:1px solid rgba(107,200,255,.16);
   background:
-    radial-gradient(circle at top, rgba(107,200,255,.08), transparent 54%),
+    radial-gradient(circle at top left, rgba(107,200,255,.10), transparent 52%),
     linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.018)),
     rgba(0,0,0,.34);
   box-shadow:inset 0 0 24px rgba(255,255,255,.025), 0 0 18px rgba(0,0,0,.34);
-  text-align:center;
-  overflow:hidden;
 }
 
-.artifact-vault-slot::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(135deg, rgba(107,200,255,.11), transparent 42%);
-  opacity:.0;
-  pointer-events:none;
+.artifact-card.locked{
+  opacity:.48;
+  filter:grayscale(.45);
 }
 
-.artifact-vault-slot.unlocked{
-  border-color:rgba(107,200,255,.40);
+.artifact-card.unlocked{
+  border-color:rgba(107,200,255,.38);
   box-shadow:
-    0 0 26px rgba(107,200,255,.13),
+    0 0 24px rgba(107,200,255,.13),
     inset 0 0 24px rgba(107,200,255,.045),
     0 0 22px rgba(0,0,0,.44);
 }
 
-.artifact-vault-slot.unlocked::before{opacity:1;}
-.artifact-vault-slot.sealed{opacity:.62; filter:grayscale(.20) saturate(.72);}
-
-.artifact-emblem{
-  width:72px;
-  height:72px;
-  margin:0 auto 12px;
-  border-radius:50%;
+.artifact-image-wrap{
+  width:100%;
+  margin-bottom:18px;
   display:flex;
   align-items:center;
   justify-content:center;
-  border:1px solid rgba(107,200,255,.22);
-  background:
-    radial-gradient(circle, rgba(107,200,255,.18), rgba(0,0,0,.68) 62%),
-    rgba(255,255,255,.04);
-  color:rgba(220,240,255,.78);
-  font-size:22px;
-  letter-spacing:.08em;
-  font-weight:700;
-  text-transform:uppercase;
-  box-shadow:inset 0 0 20px rgba(0,0,0,.62), 0 0 16px rgba(107,200,255,.08);
+  background:transparent;
+  border:none;
+  overflow:visible;
 }
 
-.artifact-vault-slot.unlocked .artifact-emblem{
-  color:#fff;
-  border-color:rgba(107,200,255,.48);
-  box-shadow:
-    0 0 16px rgba(107,200,255,.28),
-    0 0 32px rgba(107,200,255,.12),
-    inset 0 0 22px rgba(0,0,0,.58);
+.artifact-image-button{
+  border:none;
+  background:transparent;
+  padding:0;
+  margin:0;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+}
+
+.artifact-image{
+  max-width:82%;
+  max-height:230px;
+  object-fit:contain;
+  display:block;
+  filter:drop-shadow(0 0 22px rgba(107,200,255,.12));
+  transition:transform .18s ease, filter .18s ease;
+}
+
+.artifact-image-button:hover .artifact-image{
+  transform:scale(1.035);
+  filter:drop-shadow(0 0 28px rgba(107,200,255,.22));
+}
+
+.artifact-card.locked .artifact-image-wrap{
+  opacity:.45;
+  filter:grayscale(1);
+}
+
+.artifact-placeholder{
+  width:100%;
+  min-height:150px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,.10);
+  background:
+    radial-gradient(circle at center, rgba(107,200,255,.08), transparent 58%),
+    rgba(0,0,0,.22);
+  font-size:11px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,.42);
 }
 
 .artifact-name{
   font-size:15px;
-  letter-spacing:.12em;
+  font-weight:700;
+  letter-spacing:.10em;
   text-transform:uppercase;
   color:rgba(255,255,255,.92);
-  font-weight:700;
+  margin-bottom:5px;
   line-height:1.2;
 }
 
 .artifact-source{
-  margin-top:6px;
   font-size:11px;
-  letter-spacing:.12em;
+  letter-spacing:.14em;
   text-transform:uppercase;
   color:rgba(173,222,255,.48);
+  margin-bottom:8px;
 }
 
-.artifact-description{
-  margin-top:10px;
+.artifact-meaning{
   font-size:13px;
-  line-height:1.35;
-  color:rgba(255,255,255,.58);
+  line-height:1.45;
+  color:rgba(255,255,255,.68);
 }
 
-.artifact-state{
-  margin-top:12px;
-  display:inline-flex;
-  padding:6px 9px;
-  border-radius:999px;
-  border:1px solid rgba(255,255,255,.14);
-  color:rgba(255,255,255,.62);
+.artifact-status{
+  margin-top:10px;
   font-size:10px;
   letter-spacing:.14em;
   text-transform:uppercase;
+  color:rgba(255,255,255,.46);
 }
 
-.artifact-vault-slot.unlocked .artifact-state{
-  border-color:rgba(107,200,255,.38);
-  color:rgba(220,240,255,.90);
-  background:rgba(107,200,255,.10);
+.artifact-card.unlocked .artifact-status{
+  color:rgba(107,200,255,.92);
 }
 
 .artifact-vault-note{
@@ -1171,13 +1184,108 @@ body{
   color:rgba(255,255,255,.64);
 }
 
-@media(max-width:900px){
-  .artifact-vault-grid{grid-template-columns:repeat(2, minmax(0, 1fr));}
+.artifact-modal{
+  position:fixed;
+  inset:0;
+  z-index:45;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+  background:rgba(0,0,0,.82);
+  backdrop-filter:blur(7px);
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transition:opacity .22s ease, visibility .22s ease;
 }
 
-@media(max-width:560px){
+.artifact-modal.active{
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+}
+
+.artifact-modal-card{
+  width:min(780px, 100%);
+  max-height:88vh;
+  overflow:auto;
+  border-radius:18px;
+  border:1px solid rgba(107,200,255,.24);
+  background:
+    radial-gradient(circle at top, rgba(107,200,255,.08), transparent 42%),
+    rgba(0,0,0,.96);
+  box-shadow:0 28px 80px rgba(0,0,0,.86), 0 0 30px rgba(107,200,255,.10);
+  padding:24px;
+}
+
+.artifact-modal-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  padding-bottom:12px;
+  margin-bottom:18px;
+  border-bottom:1px solid rgba(255,255,255,.10);
+}
+
+.artifact-modal-title{
+  margin:0;
+  font-size:28px;
+  font-weight:700;
+  letter-spacing:.10em;
+  text-transform:uppercase;
+  color:#fff;
+}
+
+.artifact-modal-body{
+  text-align:center;
+}
+
+.artifact-modal-image{
+  width:100%;
+  max-height:460px;
+  object-fit:contain;
+  display:block;
+  margin:0 auto 18px;
+  filter:drop-shadow(0 0 34px rgba(107,200,255,.16));
+}
+
+.artifact-modal-source{
+  font-size:12px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:rgba(173,222,255,.54);
+  margin-bottom:12px;
+}
+
+.artifact-modal-meaning{
+  max-width:620px;
+  margin:0 auto;
+  font-size:16px;
+  line-height:1.6;
+  color:rgba(255,255,255,.78);
+}
+
+.artifact-modal-field{
+  max-width:620px;
+  margin:10px auto 0;
+  font-size:15px;
+  line-height:1.55;
+  color:rgba(255,255,255,.72);
+  text-align:left;
+}
+
+.artifact-modal-field span{
+  color:rgba(255,255,255,.92);
+  font-weight:700;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  font-size:12px;
+}
+
+@media(max-width:900px){
   .artifact-vault-grid{grid-template-columns:1fr;}
-  .artifact-vault-slot{min-height:auto;}
 }
 
 @media(max-width:680px){
@@ -1401,6 +1509,24 @@ body{
       </div>
       <button class="next-operation-button" style="margin-top:12px;" onclick="restoreOperationFromCode()">Restore Operation</button>
       <div id="recoveryMessage" class="recovery-message"></div>
+    </div>
+  </div>
+</section>
+
+
+<section id="artifactModal" class="artifact-modal" aria-label="Artifact detail dialog">
+  <div class="artifact-modal-card">
+    <div class="artifact-modal-header">
+      <h2 id="artifactModalTitle" class="artifact-modal-title">Artifact</h2>
+      <button class="help-close-btn" onclick="closeArtifactModal()" aria-label="Close artifact view">Close ×</button>
+    </div>
+
+    <div class="artifact-modal-body">
+      <img id="artifactModalImage" class="artifact-modal-image" src="" alt="">
+      <div id="artifactModalSource" class="artifact-modal-source"></div>
+      <div id="artifactModalMeaning" class="artifact-modal-meaning"></div>
+      <div id="artifactModalConceptPower" class="artifact-modal-field"></div>
+      <div id="artifactModalWhyItMatters" class="artifact-modal-field"></div>
     </div>
   </div>
 </section>
@@ -1807,6 +1933,14 @@ body{
     selectGame(nextOperationKey);
   }
 
+  function escapeForAttribute(value){
+    return String(value || "")
+      .replace(/\\/g, "\\\\")
+      .replace(/'/g, "\\'")
+      .replace(/"/g, "&quot;")
+      .replace(/\n/g, " ");
+  }
+
   function renderArtifactVault(){
     const vault = document.getElementById("operationsArtifactVault");
     if(!vault) return;
@@ -1814,13 +1948,16 @@ body{
     const orderedGames = Object.entries(games)
       .sort((a, b) => (a[1].sequence || 99) - (b[1].sequence || 99));
 
-    const artifactEntries = [];
+    const artifactCards = [];
 
     orderedGames.forEach(([key, game]) => {
+      const completed = getStorageFlag(game.statusKey);
+      const started = getStorageFlag(game.startedKey);
+      const sealed = game.unavailable && !completed;
       const artifacts = Array.isArray(game.artifacts) && game.artifacts.length
         ? game.artifacts
         : [{
-            name: game.artifactName || `${game.title || key} Artifact`,
+            name: game.artifactName || "Unknown Artifact",
             source: game.title || key,
             image: game.artifactImage || "",
             initials: game.artifactInitials || "",
@@ -1830,47 +1967,86 @@ body{
           }];
 
       artifacts.forEach((artifact, index) => {
-        artifactEntries.push({ key, game, artifact, index });
+        const artifactName = artifact.name || `${game.title || key} Artifact`;
+        const sourceText = artifact.source || game.title || key;
+        const lockedText = sealed
+          ? "This file is not open yet. The artifact remains sealed. Naturally. Locked files do locked-file things."
+          : started
+            ? "Operation is active. Clear the run to unlock the full artifact file."
+            : "Start and complete the operation to unlock the full artifact file.";
+
+        const meaning = completed ? (artifact.meaning || "Artifact recovered from the completed operation.") : lockedText;
+        const safeName = escapeForAttribute(artifactName);
+        const safeSource = escapeForAttribute(sourceText);
+        const safeMeaning = escapeForAttribute(artifact.meaning || meaning);
+        const safeImage = escapeForAttribute(artifact.image || "");
+        const safeConceptPower = escapeForAttribute(artifact.conceptPower || "");
+        const safeWhyItMatters = escapeForAttribute(artifact.whyItMatters || "");
+
+        const imageMarkup = completed
+          ? (artifact.image
+              ? `
+                <button class="artifact-image-button"
+                  onclick="openArtifactModal('${safeImage}', '${safeName}', '${safeSource}', '${safeMeaning}', '${safeConceptPower}', '${safeWhyItMatters}')"
+                  aria-label="Open ${safeName}">
+                  <img class="artifact-image" src="${artifact.image}" alt="${artifactName}">
+                </button>
+              `
+              : `<div class="artifact-placeholder">Image Missing</div>`)
+          : `<div class="artifact-placeholder">Locked Artifact</div>`;
+
+        artifactCards.push(`
+          <div class="artifact-card ${completed ? "unlocked" : "locked"}" data-artifact="${key}-${index}">
+            <div class="artifact-image-wrap">${imageMarkup}</div>
+            <div class="artifact-name">${completed ? artifactName : "Unknown Artifact"}</div>
+            <div class="artifact-source">${completed ? sourceText : game.title}</div>
+            <div class="artifact-meaning">${completed ? meaning : "Clear this operation to reveal the artifact and its meaning."}</div>
+            <div class="artifact-status">${completed ? "Secured" : sealed ? "Sealed" : started ? "In Progress" : "Locked"}</div>
+          </div>
+        `);
       });
     });
 
-    vault.innerHTML = artifactEntries.map(({key, game, artifact, index}) => {
-      const completed = getStorageFlag(game.statusKey);
-      const started = getStorageFlag(game.startedKey);
-      const sealed = game.unavailable && !completed;
-      const stateClass = completed ? "unlocked" : "sealed";
-      const stateText = completed ? "Unlocked" : sealed ? "Sealed" : started ? "In Progress" : "Locked";
-      const artifactName = artifact.name || `${game.title || key} Artifact`;
-      const sourceText = artifact.source || game.title || key;
-      const initials = artifact.initials || artifactName.split(/\s+/).map(word => word[0]).join("").slice(0, 2).toUpperCase();
-      const imageMarkup = artifact.image
-        ? `<img class="artifact-image" src="${artifact.image}" alt="${artifactName}">`
-        : `<div class="artifact-emblem" aria-hidden="true">${initials}</div>`;
+    vault.innerHTML = artifactCards.length
+      ? artifactCards.join("")
+      : "No artifacts configured yet.";
+  }
 
-      const lockedText = sealed
-        ? "This file is not open yet. The artifact remains sealed. Naturally. Locked files do locked-file things."
-        : started
-          ? "Operation is active. Clear the run to unlock the full artifact file."
-          : "Start and complete the operation to unlock the full artifact file.";
+  function openArtifactModal(image, name, source, meaning, conceptPower = "", whyItMatters = ""){
+    const modal = document.getElementById("artifactModal");
+    const modalImage = document.getElementById("artifactModalImage");
+    const modalTitle = document.getElementById("artifactModalTitle");
+    const modalSource = document.getElementById("artifactModalSource");
+    const modalMeaning = document.getElementById("artifactModalMeaning");
+    const modalConceptPower = document.getElementById("artifactModalConceptPower");
+    const modalWhyItMatters = document.getElementById("artifactModalWhyItMatters");
 
-      const meaning = completed ? (artifact.meaning || "Artifact recovered from the completed operation.") : lockedText;
-      const conceptPower = completed && artifact.conceptPower
-        ? `<div class="artifact-detail-label">Concept Power</div><div class="artifact-detail-text">${artifact.conceptPower}</div>`
+    if(!modal || !modalImage || !modalTitle || !modalSource || !modalMeaning) return;
+
+    modalImage.src = image;
+    modalImage.alt = name;
+    modalTitle.innerText = name;
+    modalSource.innerText = source;
+    modalMeaning.innerText = meaning;
+
+    if(modalConceptPower){
+      modalConceptPower.innerHTML = conceptPower
+        ? `<span>Concept Power:</span> ${conceptPower}`
         : "";
-      const whyItMatters = completed && artifact.whyItMatters
-        ? `<div class="artifact-detail-label">Why It Matters</div><div class="artifact-detail-text">${artifact.whyItMatters}</div>`
-        : "";
+    }
 
-      return `
-        <div class="artifact-vault-slot ${stateClass}" data-artifact="${key}-${index}">
-          ${imageMarkup}
-          <div class="artifact-name">${artifactName}</div>
-          <div class="artifact-source">${sourceText}</div>
-          <div class="artifact-description">${meaning}${conceptPower}${whyItMatters}</div>
-          <div class="artifact-state">${stateText}</div>
-        </div>
-      `;
-    }).join("");
+    if(modalWhyItMatters){
+      modalWhyItMatters.innerHTML = whyItMatters
+        ? `<span>Why It Matters:</span> ${whyItMatters}`
+        : "";
+    }
+
+    modal.classList.add("active");
+  }
+
+  function closeArtifactModal(){
+    const modal = document.getElementById("artifactModal");
+    if(modal){ modal.classList.remove("active"); }
   }
 
   function renderOperationLog(){
@@ -1970,10 +2146,22 @@ body{
 
  document.addEventListener("keydown", event => {
   if(event.key === "Escape"){
+    const artifactModal = document.getElementById("artifactModal");
     const helpModal = document.getElementById("helpModal");
+    const operationsModal = document.getElementById("operationsMenuModal");
 
-    if(helpModal.classList.contains("active")){
+    if(artifactModal && artifactModal.classList.contains("active")){
+      closeArtifactModal();
+      return;
+    }
+
+    if(helpModal && helpModal.classList.contains("active")){
       closeHelpModal();
+      return;
+    }
+
+    if(operationsModal && operationsModal.classList.contains("active")){
+      closeOperationsMenu();
       return;
     }
 
