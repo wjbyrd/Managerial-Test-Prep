@@ -1528,6 +1528,74 @@ body{
   }
 }
 
+
+
+/* =========================================================
+   PRINCIPAL BRIEFING MATCH — Economic Realm-style dropdown
+   Keeps the same compact folder behavior while removing the extra
+   lower briefing box and dialing back the blue-heavy banner.
+   ========================================================= */
+.briefing-folder{
+  width:min(760px, 100%);
+  margin:22px auto 0;
+  border-radius:18px;
+  border:1px solid rgba(255,255,255,.16);
+  background:
+    radial-gradient(circle at top, rgba(255,255,255,.08), transparent 55%),
+    rgba(0,0,0,.38);
+  box-shadow:
+    0 0 24px rgba(255,255,255,.055),
+    inset 0 0 20px rgba(255,255,255,.03);
+}
+
+.briefing-folder-label{
+  color:rgba(255,255,255,.42);
+}
+
+.briefing-folder-title{
+  color:rgba(255,255,255,.92);
+  text-shadow:none;
+}
+
+.briefing-folder-subtext{
+  color:rgba(255,255,255,.56);
+}
+
+.briefing-folder-toggle{
+  border:1px solid rgba(255,255,255,.18);
+  color:rgba(255,255,255,.70);
+}
+
+.briefing-section{
+  border:1px solid rgba(255,255,255,.11);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.025)),
+    rgba(0,0,0,.25);
+}
+
+.briefing-section-label{
+  color:rgba(255,255,255,.44);
+}
+
+.next-operation-title{
+  color:rgba(255,255,255,.94);
+}
+
+.next-operation-reason{
+  color:rgba(255,255,255,.58);
+}
+
+.next-operation-button{
+  border:1px solid rgba(255,255,255,.22);
+  background:linear-gradient(180deg, rgba(255,255,255,.15), rgba(255,255,255,.05));
+}
+
+.next-operation-button:hover{
+  border-color:rgba(255,255,255,.42);
+  background:linear-gradient(180deg, rgba(255,255,255,.22), rgba(255,255,255,.08));
+  box-shadow:0 0 20px rgba(255,255,255,.08);
+}
+
 </style>
 </head>
 
@@ -1556,14 +1624,14 @@ body{
       <header class="menu-header">
         <p class="menu-kicker">Managerial Economics Review System</p>
         <h1 class="menu-title">Choose Your Operation</h1>
-        <p class="menu-subtitle">Select the operation you want to run. Each operation targets a different set of concepts, adapts to your performance, and reports completion when you finish.</p>
+        <p class="menu-subtitle">The Principal has initiated a critical mission. Clear each operation, secure the classified files, and prove your managerial judgment holds when the numbers start lying.</p>
 
         <div class="briefing-folder collapsed" id="briefingFolder">
           <button class="briefing-folder-header" onclick="toggleBriefingFolder()" aria-expanded="false" aria-controls="briefingFolderBody">
             <div>
-              <div class="briefing-folder-label">Operations Briefing</div>
-              <div id="briefingFolderTitle" class="briefing-folder-title">0 of 1 files secured</div>
-              <div id="briefingFolderSubtext" class="briefing-folder-subtext">Next Operation: The Agency Protocol</div>
+              <div class="briefing-folder-label">Principal's Briefing</div>
+              <div id="briefingFolderTitle" class="briefing-folder-title">0 of 2 files secured</div>
+              <div id="briefingFolderSubtext" class="briefing-folder-subtext">Next Operation: The Cost Directive</div>
             </div>
             <span id="briefingFolderToggle" class="briefing-folder-toggle">Open</span>
           </button>
@@ -1571,39 +1639,37 @@ body{
           <div class="briefing-folder-body" id="briefingFolderBody">
             <div id="nextOperationBox" class="briefing-section next-operation-box">
               <div class="briefing-section-label">Next Operation</div>
-              <div id="nextOperationTitle" class="next-operation-title">The Agency Protocol</div>
+              <div id="nextOperationTitle" class="next-operation-title">The Cost Directive</div>
               <div id="nextOperationReason" class="next-operation-reason">
-                Close the first active file by identifying hidden information problems and incentive failures.
+                The Principal has opened the cost-control file. Review tradeoffs, relevant costs, marginal decisions, and scale.
               </div>
               <button id="nextOperationButton" class="next-operation-button" onclick="launchNextOperation()">
                 Begin Next Operation
               </button>
-            </div>
-
-            <div id="operationsNarrativeBox" class="briefing-section operations-narrative-box">
-              <div class="briefing-section-label">Agency Briefing</div>
-              <div id="operationsNarrativeText" class="operations-narrative-text">
-                The files are sealed. Clear each operation as it comes online to lock down the managerial system.
-              </div>
             </div>
           </div>
         </div>
       </header>
 
 <section class="game-grid" aria-label="Available review operations">
-  <article class="game-card directive coming-soon" aria-disabled="true">
+  <article class="game-card directive">
     <div class="game-thumb" aria-hidden="true"></div>
     <div class="game-content">
       <h2 class="game-title">The Cost Directive</h2>
-      <p class="game-tagline">Coming soon.</p>
-      <p class="mission-briefing" id="briefing-directive">Sealed file. Cost structure, production decisions, and profit logic will come online later.</p>
-      <div class="restored-badge" id="badge-directive">File secured</div>
+      <p class="game-tagline">Trace tradeoffs, relevant costs, marginal decisions, and scale before the firm bleeds margin.</p>
+      <p class="mission-briefing" id="briefing-directive">Principal’s directive: Open the cost-control file by judging opportunity cost, relevant costs, marginal analysis, and scale decisions.</p>
+      <div class="restored-badge" id="badge-directive">Directive secured · File closed</div>
       <div class="topic-list">
-        <span class="topic-chip">Coming Soon</span>
+        <span class="topic-chip">Tradeoffs</span>
+        <span class="topic-chip">Opportunity Cost</span>
+        <span class="topic-chip">Relevant Costs</span>
+        <span class="topic-chip">Marginal Decisions</span>
+        <span class="topic-chip">Scale</span>
+        <span class="topic-chip">Scope</span>
       </div>
       <div class="game-meta">
-        <div class="status-line"><span>Status</span><span class="status-value" id="status-directive">Coming Soon</span></div>
-        <button class="enter-btn disabled-btn" type="button" disabled>Coming Soon</button>
+        <div class="status-line"><span>Status</span><span class="status-value" id="status-directive">Ready</span></div>
+        <button class="enter-btn" onclick="selectGame('directive')">Enter Directive</button>
       </div>
     </div>
   </article>
@@ -1839,14 +1905,16 @@ body{
       statusKey: "managerialHub_directive_complete",
       startedKey: "managerialHub_directive_started",
       roomKey: "managerialHub_directive_room",
-      unavailable: true,
-      offlineText: "Coming Soon",
+      unstableText: "Directive Unopened",
+      contestedText: "Directive Active",
+      restoredText: "Directive Cleared",
+      artifactText: "Cost Directive secured · File closed",
       sequence: 1,
       buttonText: "Enter Directive",
-      nextReason: "Review production, costs, and profit logic once this file is opened.",
-      storyIntro: "The Cost Directive is still sealed. Cost pressure is building behind the glass.",
-      storyActive: "The Cost Directive is active. Track the cost signals before the firm bleeds margin.",
-      storyRestored: "The Cost Directive is secured. Cost structure is back under control.",
+      nextReason: "The Principal has opened the cost-control file. Review tradeoffs, opportunity cost, relevant costs, marginal decisions, and scale.",
+      storyIntro: "The Cost Directive is open. Cost pressure is building behind the glass, and the Principal wants the file secured before bad decisions become permanent.",
+      storyActive: "The Cost Directive is active. Track the cost signals, ignore sunk-cost nonsense, and stop the firm from bleeding margin.",
+      storyRestored: "The Cost Directive is secured. Tradeoffs, marginal decisions, and scale are back under control.",
       recoveryCode: "DIRECTIVE-SECURED",
       artifactName: "Cost Cipher",
       artifactInitials: "CC",
@@ -2130,6 +2198,9 @@ body{
     const game = games[gameKey];
     if(!game || game.unavailable) return false;
 
+    // Completed files stay accessible even if the active sequence changes later.
+    if(isOperationCompleted(gameKey)) return true;
+
     const activeKeys = getSortedOperationKeys(false);
     const currentIndex = activeKeys.indexOf(gameKey);
 
@@ -2186,16 +2257,6 @@ body{
         enterButton.classList.toggle("disabled-btn", !unlocked);
       }
 
-      if(!unlocked){
-        statusElement.innerText = "Sealed";
-        statusElement.dataset.realmState = "offline";
-
-        if(card){ card.classList.add("locked"); }
-        if(badge) badge.innerText = "";
-        if(briefing) briefing.innerText = "Sealed file. Clear the prior operation before opening this one.";
-        return;
-      }
-
       if(completed){
         statusElement.innerText = game.restoredText || "Cleared";
         statusElement.dataset.realmState = "restored";
@@ -2205,6 +2266,14 @@ body{
         if(briefing) briefing.innerText = game.storyRestored || "Operation secured.";
 
         clearedCount++;
+      } else if(!unlocked){
+        statusElement.innerText = "Sealed";
+        statusElement.dataset.realmState = "offline";
+
+        if(card){ card.classList.add("locked"); }
+        if(badge) badge.innerText = "";
+        if(briefing) briefing.innerText = "Sealed file. Clear the prior operation before opening this one.";
+        return;
       } else if(started){
         statusElement.innerText = room ? `${game.contestedText || "Active"} · Room ${room}` : (game.contestedText || "Active");
         statusElement.dataset.realmState = "contested";
@@ -2225,7 +2294,6 @@ body{
     });
 
     updateBriefingSummary(clearedCount, contestedCount, totalOperations);
-    updateOperationsNarrative(clearedCount, contestedCount, totalOperations);
     renderArtifactVault();
     renderAchievements();
   }
