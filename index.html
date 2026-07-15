@@ -1952,18 +1952,43 @@ body{
       statusKey: "managerialHub_desk_complete",
       startedKey: "managerialHub_desk_started",
       roomKey: "managerialHub_desk_room",
-      unavailable: true,
-      offlineText: "Coming Soon",
+      unstableText: "Desk Unopened",
+      contestedText: "Desk Active",
+      restoredText: "Desk Secured",
+      artifactText: "Strategy Desk secured · Board cleared",
       sequence: 3,
       buttonText: "Enter Desk",
-      nextReason: "Review strategic behavior, rivalry, and firm decision-making once this file is opened.",
-      storyIntro: "The Strategy Desk is still sealed. Rival moves are hidden in the dark.",
-      storyActive: "The Strategy Desk is active. Every move creates a countermove.",
-      storyRestored: "The Strategy Desk is secured. Strategic control has been restored.",
+      nextReason: "Read demand, price across a portfolio, segment customers, and anticipate strategic responses before the next move lands.",
+      storyIntro: "The Strategy Desk is open. Demand signals are noisy, segments are shifting, and every move creates a countermove.",
+      storyActive: "The Strategy Desk is active. Price, package, commitment, and bargaining position are all live on the board.",
+      storyRestored: "The Strategy Desk is secured. Demand, segmentation, and strategic control are back on the board.",
       recoveryCode: "DESK-SECURED",
-      artifactName: "Strategy Board",
-      artifactInitials: "SB",
-      artifactDescription: "Represents rivalry, strategic moves, countermoves, and firm decision rules under pressure."
+      artifacts: [
+        {
+          name: "The Elasticity Compass",
+          source: "Demand Strategist",
+          image: "The Strategy Desk/elasticity_compass.svg",
+          meaning: "The Elasticity Compass represents demand responsiveness, optimal pricing, capacity decisions, and the evidence needed before moving a price.",
+          conceptPower: "Demand and pricing decisions work only when the firm can see how quantity, contribution, capacity, promotion, and related products respond together.",
+          whyItMatters: "It reminds students that price is a strategic decision rather than a number chosen in isolation."
+        },
+        {
+          name: "The Segmentation Seal",
+          source: "Segmentation Broker",
+          image: "The Strategy Desk/segmentation_seal.svg",
+          meaning: "The Segmentation Seal represents direct and indirect price discrimination, self-selection, versioning, and bundling.",
+          conceptPower: "A firm can create more value when it recognizes willingness-to-pay differences and designs defensible choices around them.",
+          whyItMatters: "It keeps students focused on the conditions that make segmentation work, including the need to control arbitrage."
+        },
+        {
+          name: "The Bargaining Ledger",
+          source: "The Game Architect",
+          image: "The Strategy Desk/bargaining_ledger.svg",
+          meaning: "The Bargaining Ledger represents strategic interdependence, equilibrium, commitment, timing, and bargaining power.",
+          conceptPower: "Strategic choices have value only in relation to the responses they invite from other players.",
+          whyItMatters: "It helps students move from isolated decisions to a complete view of rivalry and negotiation."
+        }
+      ]
     },
     agency: {
       title: "The Agency Protocol",
@@ -2772,7 +2797,5 @@ body{
 </script>
 </body>
 </html>
-
-
 
 
