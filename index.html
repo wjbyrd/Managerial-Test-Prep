@@ -2492,7 +2492,7 @@ body{
     };
   }
 
-  function renderAchievements(){
+  function renderAchievementPlaceholders(){
     const container = document.getElementById("achievementsContent");
     if(!container) return;
 
@@ -2528,6 +2528,83 @@ body{
         </div>
       </div>
     `;
+  }
+
+  const MANAGERIAL_ACHIEVEMENTS = [
+    { title: "First File", description: "Secure one operation.", icon: "*", unlocked: stats => stats.completed >= 1 },
+    { title: "Operations Chief", description: "Secure every active operation.", icon: "+", unlocked: stats => stats.completed >= stats.total && stats.total > 0 },
+    { title: "Unbroken Judgment", description: "Reach a streak of 20.", icon: "^", unlocked: stats => stats.bestStreak >= 20 },
+    { title: "Trial by Clock", description: "Reach Room 30 in Timed Trial with at least 80 percent accuracy.", icon: "T", unlocked: stats => stats.timedRoom >= 30 && stats.timedAccuracy >= 80 },
+    { title: "Exam Operator", description: "Complete an Exam Drill session.", icon: "E", unlocked: stats => stats.examSessions >= 1 },
+    { title: "Legendary File", description: "Complete one operation in Legendary Mode.", icon: "L", unlocked: stats => stats.legendaryCompletions >= 1 },
+    { title: "Perfect Review", description: "Defeat all three bosses in a single operation without a wrong answer.", icon: "O", unlocked: stats => stats.perfectBossRuns >= 1 },
+    { title: "Return to Duty", description: "Resume a saved run and finish it.", icon: "R", unlocked: stats => stats.resumeFinishes >= 1 },
+    { title: "Classified Collection", description: "Secure every active operation artifact set.", icon: "#", unlocked: stats => stats.artifactsCollected >= stats.totalArtifacts && stats.totalArtifacts > 0 },
+    { title: "Proof of Work", description: "Answer 400 questions correctly.", icon: "!", unlocked: stats => stats.totalCorrect >= 400 }
+  ];
+
+  function getManagerialStorageEntries(){
+    const entries = [];
+    for(let i = 0; i < localStorage.length; i++){
+      const key = localStorage.key(i);
+      entries.push({ lowerKey: String(key || "").toLowerCase(), value: localStorage.getItem(key) });
+    }
+    return entries;
+  }
+
+  function getManagerialAchievementStats(){
+    const activeKeys = getSortedOperationKeys(false);
+    const entries = getManagerialStorageEntries();
+    const maxValue = matcher => entries.reduce((max, entry) => {
+      const value = Number(entry.value);
+      return matcher(entry.lowerKey) && Number.isFinite(value) ? Math.max(max, value) : max;
+    }, 0);
+    const trueCount = matcher => entries.filter(entry => matcher(entry.lowerKey) && (entry.value === "true" || entry.value === "1")).length;
+    const completed = activeKeys.filter(key => isOperationCompleted(key)).length;
+    const totalArtifacts = activeKeys.reduce((total, key) => total + ((games[key].artifacts || []).length), 0);
+    const artifactsCollected = activeKeys.reduce((total, key) => total + (isOperationCompleted(key) ? (games[key].artifacts || []).length : 0), 0);
+
+    return {
+      total: activeKeys.length,
+      completed,
+      legendaryCompletions: activeKeys.filter(key => localStorage.getItem(`managerialHub_${key}_legendary_complete`) === "true" || localStorage.getItem(`${key}LegendaryComplete`) === "true").length,
+      bestStreak: maxValue(key => key.includes("maxstreak") || key.includes("beststreak") || key.includes("timedlaststreak")),
+      timedRoom: maxValue(key => key.includes("timed") && key.includes("room")),
+      timedAccuracy: maxValue(key => key.includes("timed") && key.includes("accuracy")),
+      examSessions: trueCount(key => key.includes("exam") && (key.includes("complete") || key.includes("survivor"))),
+      perfectBossRuns: trueCount(key => key.includes("perfect") && (key.includes("boss") || key.includes("calibration")) && (key.includes("complete") || key.includes("run"))),
+      resumeFinishes: trueCount(key => (key.includes("resume") || key.includes("rebuild")) && (key.includes("finish") || key.includes("complete"))),
+      totalCorrect: maxValue(key => key.includes("correcttotal") || key.includes("totalcorrect") || key.includes("correctanswerslifetime")),
+      totalArtifacts,
+      artifactsCollected
+    };
+  }
+
+  function renderAchievements(){
+    const container = document.getElementById("achievementsContent");
+    if(!container) return;
+
+    const stats = getManagerialAchievementStats();
+    const achievements = MANAGERIAL_ACHIEVEMENTS.map(item => ({ ...item, unlocked: !!item.unlocked(stats) }));
+    const unlockedCount = achievements.filter(item => item.unlocked).length;
+    const progressPct = Math.round((unlockedCount / achievements.length) * 100);
+    const cards = achievements.map(item => `
+      <div class="achievement-card ${item.unlocked ? "unlocked" : "locked"}"
+        onclick="openAchievementModal('${item.icon}', '${item.title}', '${item.description}', '${item.unlocked ? "Unlocked" : "Locked"}')"
+        role="button" tabindex="0" aria-label="Open achievement ${item.title}"
+        onkeydown="if(event.key === 'Enter' || event.key === ' '){ event.preventDefault(); openAchievementModal('${item.icon}', '${item.title}', '${item.description}', '${item.unlocked ? "Unlocked" : "Locked"}'); }">
+        <div class="achievement-icon" aria-hidden="true">${item.icon}</div>
+        <div><div class="achievement-name">${item.title}</div><div class="achievement-desc">${item.description}</div><div class="achievement-status">${item.unlocked ? "Unlocked" : "Locked"}</div></div>
+      </div>`).join("");
+
+    container.innerHTML = `
+      <div class="achievement-summary">
+        <div class="achievement-summary-label">Achievement Progress</div>
+        <div class="achievement-summary-title">${unlockedCount}/${achievements.length}</div>
+        <div class="achievement-summary-text">${stats.completed}/${stats.total} active operations secured &middot; ${stats.artifactsCollected}/${stats.totalArtifacts} artifacts cataloged</div>
+        <div class="achievement-progress-track" aria-hidden="true"><div class="achievement-progress-fill" style="width:${progressPct}%"></div></div>
+      </div>
+      <div class="achievement-grid">${cards}</div>`;
   }
 
   function openAchievementModal(icon, title, description, status){
