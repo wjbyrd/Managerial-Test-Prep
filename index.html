@@ -2602,16 +2602,16 @@ body{
   }
 
   const MANAGERIAL_ACHIEVEMENTS = [
-    { title: "First File", description: "Secure one operation.", icon: "*", unlocked: stats => stats.completed >= 1 },
-    { title: "Operations Chief", description: "Secure every active operation.", icon: "+", unlocked: stats => stats.completed >= stats.total && stats.total > 0 },
-    { title: "Unbroken Judgment", description: "Reach a streak of 20.", icon: "^", unlocked: stats => stats.bestStreak >= 20 },
-    { title: "Trial by Clock", description: "Reach Room 30 in Timed Trial with at least 80 percent accuracy.", icon: "T", unlocked: stats => stats.timedRoom >= 30 && stats.timedAccuracy >= 80 },
-    { title: "Exam Operator", description: "Complete an Exam Drill session.", icon: "E", unlocked: stats => stats.examSessions >= 1 },
-    { title: "Legendary File", description: "Complete one operation in Legendary Mode.", icon: "L", unlocked: stats => stats.legendaryCompletions >= 1 },
-    { title: "Perfect Review", description: "Defeat all three bosses in a single operation without a wrong answer.", icon: "O", unlocked: stats => stats.perfectBossRuns >= 1 },
-    { title: "Return to Duty", description: "Resume a saved run and finish it.", icon: "R", unlocked: stats => stats.resumeFinishes >= 1 },
-    { title: "Classified Collection", description: "Secure every active operation artifact set.", icon: "#", unlocked: stats => stats.artifactsCollected >= stats.totalArtifacts && stats.totalArtifacts > 0 },
-    { title: "Proof of Work", description: "Answer 400 questions correctly.", icon: "!", unlocked: stats => stats.totalCorrect >= 400 }
+    { title: "First File", description: "Secure one operation.", icon: "first_file.webp", unlocked: stats => stats.completed >= 1 },
+    { title: "Operations Chief", description: "Secure every active operation.", icon: "operations_chief.webp", unlocked: stats => stats.completed >= stats.total && stats.total > 0 },
+    { title: "Unbroken Judgment", description: "Reach a streak of 20.", icon: "unbroken_judgement.webp", unlocked: stats => stats.bestStreak >= 20 },
+    { title: "Trial by Clock", description: "Reach Room 30 in Timed Trial with at least 80 percent accuracy.", icon: "trial_by_clock.webp", unlocked: stats => stats.timedRoom >= 30 && stats.timedAccuracy >= 80 },
+    { title: "Exam Operator", description: "Complete an Exam Drill session.", icon: "exam_operator.webp", unlocked: stats => stats.examSessions >= 1 },
+    { title: "Legendary File", description: "Complete one operation in Legendary Mode.", icon: "legendary_file.webp", unlocked: stats => stats.legendaryCompletions >= 1 },
+    { title: "Perfect Review", description: "Defeat all three bosses in a single operation without a wrong answer.", icon: "perfect_review.webp", unlocked: stats => stats.perfectBossRuns >= 1 },
+    { title: "Return to Duty", description: "Resume a saved run and finish it.", icon: "return_to_duty.webp", unlocked: stats => stats.resumeFinishes >= 1 },
+    { title: "Classified Collection", description: "Secure every active operation artifact set.", icon: "classified_collection.webp", unlocked: stats => stats.artifactsCollected >= stats.totalArtifacts && stats.totalArtifacts > 0 },
+    { title: "Proof of Work", description: "Answer 400 questions correctly.", icon: "proof_of_work.webp", unlocked: stats => stats.totalCorrect >= 400 }
   ];
 
   function getManagerialStorageEntries(){
