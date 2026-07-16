@@ -594,7 +594,7 @@ body{
 
   .directive .game-thumb{background-image:url('tcd_thumbnail.webp');}
   .market .game-thumb{background-image:url('tms_thumbnail.webp');}
-  .desk .game-thumb{background-image:url('tsd_thumbnail.png');}
+  .desk .game-thumb{background-image:url('tsd_thumbnail.webp');}
   .agency .game-thumb{background-image:url('tap_thumbnail.webp');}
   
   #emailModal{
@@ -1393,6 +1393,8 @@ body{
 .achievement-icon{
   width:48px;
   height:48px;
+  overflow:hidden;
+  padding:0;
   border-radius:14px;
   display:flex;
   align-items:center;
@@ -1405,6 +1407,21 @@ body{
   line-height:1;
 }
 
+.achievement-icon-image{
+  width:100%;
+  height:100%;
+  display:block;
+  object-fit:contain;
+}
+
+.achievement-modal-image{
+  display:block;
+  width:min(260px, 80%);
+  max-height:260px;
+  object-fit:contain;
+  margin:0 auto 18px;
+}
+  
 .achievement-name{
   font-size:14px;
   font-weight:700;
@@ -1630,7 +1647,7 @@ body{
           <button class="briefing-folder-header" onclick="toggleBriefingFolder()" aria-expanded="false" aria-controls="briefingFolderBody">
             <div>
               <div class="briefing-folder-label">Principal's Briefing</div>
-              <div id="briefingFolderTitle" class="briefing-folder-title">0 of 3 files secured</div>
+              <div id="briefingFolderTitle" class="briefing-folder-title">0 of 4 files secured</div>
               <div id="briefingFolderSubtext" class="briefing-folder-subtext">Next Operation: The Cost Directive</div>
             </div>
             <span id="briefingFolderToggle" class="briefing-folder-toggle">Open</span>
@@ -1696,22 +1713,44 @@ body{
     </div>
   </article>
 
-  <article class="game-card desk coming-soon" aria-disabled="true">
-    <div class="game-thumb" aria-hidden="true"></div>
-    <div class="game-content">
-      <h2 class="game-title">The Strategy Desk</h2>
-      <p class="game-tagline">Coming soon.</p>
-      <p class="mission-briefing" id="briefing-desk">Sealed file. Strategic behavior, firm rivalry, and organizational control will come online later.</p>
-      <div class="restored-badge" id="badge-desk">File secured</div>
-      <div class="topic-list">
-        <span class="topic-chip">Coming Soon</span>
-      </div>
-      <div class="game-meta">
-        <div class="status-line"><span>Status</span><span class="status-value" id="status-desk">Coming Soon</span></div>
-        <button class="enter-btn disabled-btn" type="button" disabled>Coming Soon</button>
-      </div>
+<article class="game-card desk">
+  <div class="game-thumb" aria-hidden="true"></div>
+  <div class="game-content">
+    <h2 class="game-title">The Strategy Desk</h2>
+
+    <p class="game-tagline">
+      Read demand, segment customers, set prices, and anticipate the next strategic move.
+    </p>
+
+    <p class="mission-briefing" id="briefing-desk">
+      Principal’s directive: Analyze elasticity, pricing, segmentation, strategic interaction, and bargaining power.
+    </p>
+
+    <div class="restored-badge" id="badge-desk">
+      Strategy Desk secured · Board cleared
     </div>
-  </article>
+
+    <div class="topic-list">
+      <span class="topic-chip">Elasticity</span>
+      <span class="topic-chip">Pricing</span>
+      <span class="topic-chip">Segmentation</span>
+      <span class="topic-chip">Bundling</span>
+      <span class="topic-chip">Game Theory</span>
+      <span class="topic-chip">Bargaining</span>
+    </div>
+
+    <div class="game-meta">
+      <div class="status-line">
+        <span>Status</span>
+        <span class="status-value" id="status-desk">Ready</span>
+      </div>
+
+      <button class="enter-btn" onclick="selectGame('desk')">
+        Enter Desk
+      </button>
+    </div>
+  </div>
+</article>
 
   <article class="game-card agency">
     <div class="game-thumb" aria-hidden="true"></div>
@@ -1849,7 +1888,12 @@ body{
     </div>
 
     <div class="artifact-modal-body">
-      <div id="achievementModalImage" class="achievement-icon" style="margin:0 auto 18px;">◆</div>
+      <img
+        id="achievementModalImage"
+        class="achievement-modal-image"
+        src=""
+        alt=""
+      >
       <div id="achievementModalStatus" class="artifact-modal-source"></div>
       <div id="achievementModalDescription" class="artifact-modal-meaning"></div>
     </div>
@@ -2664,7 +2708,13 @@ body{
         onclick="openAchievementModal('${item.icon}', '${item.title}', '${item.description}', '${item.unlocked ? "Unlocked" : "Locked"}')"
         role="button" tabindex="0" aria-label="Open achievement ${item.title}"
         onkeydown="if(event.key === 'Enter' || event.key === ' '){ event.preventDefault(); openAchievementModal('${item.icon}', '${item.title}', '${item.description}', '${item.unlocked ? "Unlocked" : "Locked"}'); }">
-        <div class="achievement-icon" aria-hidden="true">${item.icon}</div>
+        <div class="achievement-icon">
+          <img
+            class="achievement-icon-image"
+            src="${item.icon}"
+            alt="${item.title}"
+          >
+        </div>
         <div><div class="achievement-name">${item.title}</div><div class="achievement-desc">${item.description}</div><div class="achievement-status">${item.unlocked ? "Unlocked" : "Locked"}</div></div>
       </div>`).join("");
 
@@ -2687,7 +2737,8 @@ body{
 
     if(!modal || !modalIcon || !modalTitle || !modalStatus || !modalDescription) return;
 
-    modalIcon.innerText = icon || "◆";
+    modalIcon.src = icon || "";
+    modalIcon.alt = title || "Achievement";
     modalTitle.innerText = title || "Achievement";
     modalStatus.innerText = status || "Pending";
     modalDescription.innerText = description || "";
