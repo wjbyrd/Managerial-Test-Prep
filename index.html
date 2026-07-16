@@ -1921,9 +1921,32 @@ body{
       storyActive: "The Cost Directive is active. Track the cost signals, ignore sunk-cost nonsense, and stop the firm from bleeding margin.",
       storyRestored: "The Cost Directive is secured. Tradeoffs, marginal decisions, and scale are back under control.",
       recoveryCode: "DIRECTIVE-SECURED",
-      artifactName: "Cost Cipher",
-      artifactInitials: "CC",
-      artifactDescription: "Represents production discipline, cost structure, and knowing when scale helps or hurts."
+      artifacts: [
+        {
+          name: "The Tradeoff Report",
+          source: "Cost Analyst",
+          image: "report.webp",
+          meaning: "The Tradeoff Report represents scarcity, tradeoffs, and opportunity cost: every choice uses resources that could have gone somewhere else.",
+          conceptPower: "Opportunity cost is the value of the next-best alternative forgone. Sound decisions compare the relevant benefits and costs of the available options, not just the visible expense of one option.",
+          whyItMatters: "It helps students make tradeoffs explicit before they move to marginal analysis, so they can see what a decision truly gives up."
+        },
+        {
+          name: "The Marginal Ledger",
+          source: "Margin Auditor",
+          image: "ledger.webp",
+          meaning: "The Marginal Ledger represents relevant cost, marginal benefit, and the discipline of separating decision-useful information from noise.",
+          conceptPower: "A marginal decision compares the additional benefit of one more unit or action with its additional relevant cost. Sunk costs and unavoidable costs should not control a forward-looking choice.",
+          whyItMatters: "It gives students a practical test for expansion, shutdown, pricing, and production decisions when total-cost intuition points the wrong way."
+        },
+        {
+          name: "The Strategic Scale Plan",
+          source: "Director of Production",
+          image: "plan.webp",
+          meaning: "The Strategic Scale Plan represents long-run cost structure, scale, scope, learning, and production discipline.",
+          conceptPower: "Economies of scale lower average cost as output expands; diseconomies raise it when coordination or capacity limits take over. Economies of scope and learning effects can also change the cost advantage of a firm.",
+          whyItMatters: "It connects a single operating choice to the larger question of how a firm should organize, grow, and sustain cost advantage."
+        }
+      ]
     },
     market: {
       title: "The Market Signal",
@@ -1942,9 +1965,32 @@ body{
       storyActive: "The Market Signal is active. Separate value from noise, price uncertainty, and read how competition changes returns.",
       storyRestored: "The Market Signal is secured. Capital decisions, uncertainty, and competitive market forces are back under control.",
       recoveryCode: "SIGNAL-SECURED",
-      artifactName: "Market Signal Array",
-      artifactInitials: "MS",
-      artifactDescription: "Represents capital allocation, uncertainty, market equilibrium, competitive returns, and the erosion of profits through entry and imitation."
+      artifacts: [
+        {
+          name: "The Capital Key",
+          source: "Investment Gatekeeper",
+          image: "capital_key.webp",
+          meaning: "The Capital Key represents disciplined investment logic: discounting, cost of capital, net present value, break-even analysis, and the exclusion of sunk costs.",
+          conceptPower: "A project creates value when the present value of its relevant expected cash flows exceeds the investment required. The discount rate reflects the opportunity cost and risk of the capital committed.",
+          whyItMatters: "It helps students distinguish a project that sounds promising from one that actually clears the value-creation threshold."
+        },
+        {
+          name: "The Risk Prism",
+          source: "Uncertainty Analyst",
+          image: "risk_prism.webp",
+          meaning: "The Risk Prism represents the separation of signal from noise through probabilities, expected value, experimentation, error costs, and contingency planning.",
+          conceptPower: "Decision-makers should weigh outcomes by their likelihood, identify what can be learned before committing, and compare the cost of different mistakes under uncertainty.",
+          whyItMatters: "It moves students beyond treating uncertainty as a feeling and toward evaluating risk with evidence, probabilities, and the value of information."
+        },
+        {
+          name: "The Market Map",
+          source: "Market Cartographer",
+          image: "market_map.webp",
+          meaning: "The Market Map represents market definition, buyer and seller behavior, equilibrium, competition, entry, imitation, and profit erosion.",
+          conceptPower: "Market outcomes depend on demand, supply, strategic behavior, and the ability of rivals to enter or copy attractive opportunities. Above-normal returns invite competitive pressure unless a durable barrier protects them.",
+          whyItMatters: "It helps students connect a firm-level decision to the market forces that determine whether an advantage can survive."
+        }
+      ]
     },
     desk: {
       title: "The Strategy Desk",
@@ -1967,7 +2013,7 @@ body{
         {
           name: "The Elasticity Compass",
           source: "Demand Strategist",
-          image: "The Strategy Desk/elasticity_compass.webp",
+          image: "elasticity_compass.webp",
           meaning: "The Elasticity Compass represents demand responsiveness, optimal pricing, capacity decisions, and the evidence needed before moving a price.",
           conceptPower: "Demand and pricing decisions work only when the firm can see how quantity, contribution, capacity, promotion, and related products respond together.",
           whyItMatters: "It reminds students that price is a strategic decision rather than a number chosen in isolation."
@@ -1975,7 +2021,7 @@ body{
         {
           name: "The Segmentation Seal",
           source: "Segmentation Broker",
-          image: "The Strategy Desk/segmentation_seal.webp",
+          image: "segmentation_seal.webp",
           meaning: "The Segmentation Seal represents direct and indirect price discrimination, self-selection, versioning, and bundling.",
           conceptPower: "A firm can create more value when it recognizes willingness-to-pay differences and designs defensible choices around them.",
           whyItMatters: "It keeps students focused on the conditions that make segmentation work, including the need to control arbitrage."
@@ -1983,7 +2029,7 @@ body{
         {
           name: "The Bargaining Ledger",
           source: "The Game Architect",
-          image: "The Strategy Desk/bargaining_ledger.webp",
+          image: "bargaining_ledger.webp",
           meaning: "The Bargaining Ledger represents strategic interdependence, equilibrium, commitment, timing, and bargaining power.",
           conceptPower: "Strategic choices have value only in relation to the responses they invite from other players.",
           whyItMatters: "It helps students move from isolated decisions to a complete view of rivalry and negotiation."
@@ -2011,7 +2057,7 @@ body{
         {
           name: "The Red Ledger",
           source: "Underwriter of Hidden Risk",
-          image: "The Agency Protocol/ledger.webp",
+          image: "ledger.webp",
           meaning: "The Red Ledger represents adverse selection and the danger of pricing a deal when hidden risk is buried in the file.",
           conceptPower: "Adverse selection happens before an agreement when one side has better information than the other and the worse risks are more likely to enter the deal.",
           whyItMatters: "Students often treat hidden information like ordinary uncertainty. The ledger reminds them to ask who knows what before the contract is signed."
@@ -2019,7 +2065,7 @@ body{
         {
           name: "The Glass Lens",
           source: "Auditor of Moral Hazard",
-          image: "The Agency Protocol/lens.webp",
+          image: "lens.webp",
           meaning: "The Glass Lens represents hidden action and the need to observe behavior after incentives have been created.",
           conceptPower: "Moral hazard happens after an agreement when one party changes behavior because someone else bears part of the cost.",
           whyItMatters: "Students often mix up hidden information with hidden action. The lens reminds them to ask whether the problem happens before or after the agreement."
@@ -2027,7 +2073,7 @@ body{
         {
           name: "The Incentive Algorithm",
           source: "Chief Architect of Incentives",
-          image: "The Agency Protocol/algorithm.webp",
+          image: "algorithm.webp",
           meaning: "The Incentive Algorithm represents principal-agent problems and the work of aligning rewards, constraints, and behavior.",
           conceptPower: "A principal-agent problem appears when the agent making decisions does not bear the same costs or receive the same benefits as the principal.",
           whyItMatters: "Students need to see that incentives do not just describe behavior. They shape it. The algorithm reminds them that better design changes what people actually do."
